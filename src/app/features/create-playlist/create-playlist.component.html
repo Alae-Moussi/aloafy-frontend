@@ -1,0 +1,111 @@
+<div class="upload-container">
+  <div class="header-section">
+    <h1 class="page-title">Create Playlist</h1>
+    <p class="page-subtitle">Organize your favorite songs into a custom playlist</p>
+  </div>
+
+  <form [formGroup]="playlistForm">
+    <div class="content-section">
+      <h2 class="section-title">Playlist Details</h2>
+      
+      <div class="input-group">
+        <label for="name" class="input-label">Playlist Name *</label>
+        <input id="name" type="text" class="input-field"
+               [class.error]="playlistForm.get('name')?.invalid && playlistForm.get('name')?.touched"
+               formControlName="name" placeholder="Enter playlist name" [disabled]="uploading">
+        
+        <span class="error-message" *ngIf="playlistForm.get('name')?.touched && playlistForm.get('name')?.hasError('required')">
+          Playlist Name is required
+        </span>
+        <span class="error-message" *ngIf="playlistForm.get('name')?.touched && playlistForm.get('name')?.hasError('minlength')">
+          Name must be at least 2 characters
+        </span>
+        <span class="error-message" *ngIf="playlistForm.get('name')?.touched && playlistForm.get('name')?.hasError('maxlength')">
+          Name cannot exceed 100 characters
+        </span>
+      </div>
+
+      <div class="input-group">
+        <label for="description" class="input-label">Description *</label>
+        <textarea id="description" class="input-field textarea-field"
+                  [class.error]="playlistForm.get('description')?.invalid && playlistForm.get('description')?.touched"
+                  formControlName="description" placeholder="Add a description (minimum 10 characters)"
+                  [disabled]="uploading" rows="4"></textarea>
+        
+        <div class="field-footer">
+          <span class="error-message" *ngIf="playlistForm.get('description')?.touched && playlistForm.get('description')?.hasError('required')">
+            Description is required
+          </span>
+          <span class="error-message" *ngIf="playlistForm.get('description')?.touched && playlistForm.get('description')?.hasError('minlength')">
+            Description must be at least 10 characters
+          </span>
+          <span class="error-message" *ngIf="playlistForm.get('description')?.touched && playlistForm.get('description')?.hasError('maxlength')">
+            Description cannot exceed 500 characters
+          </span>
+          <span class="char-count">{{ playlistForm.get('description')?.value?.length || 0 }}/500</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2 class="section-title">Cover Image</h2>
+      
+      <div class="input-group">
+        <label class="input-label">Playlist Cover *</label>
+        <div class="file-upload-wrapper">
+          <input type="file" id="imageFile" accept="image/*" (change)="onImageFileSelected($event)"
+                 [disabled]="uploading" class="file-input-hidden">
+          
+          <label for="imageFile" class="file-upload-box" [class.has-file]="imageFile" [class.error]="imageFileError">
+            <div class="file-upload-content">
+              <mat-icon class="file-icon">{{ imageFile ? 'image' : 'add_photo_alternate' }}</mat-icon>
+              <div class="file-info">
+                <span class="file-name">{{ imageFile?.name || 'Choose cover image' }}</span>
+                <span class="file-hint">JPG, PNG, or other image formats (max 5MB). Recommended: Square image, at least 300x300px</span>
+              </div>
+            </div>
+          </label>
+
+          <button *ngIf="imageFile" mat-icon-button class="clear-file-btn" (click)="clearImageFile()"
+                  [disabled]="uploading" type="button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <span class="error-message" *ngIf="imageFileError">{{ imageFileError }}</span>
+      </div>
+
+      <div *ngIf="imagePreviewUrl" class="preview-container">
+        <div class="preview-header">
+          <mat-icon class="preview-icon">photo_library</mat-icon>
+          <span class="preview-label">Cover Image Preview</span>
+        </div>
+        <div class="image-preview-wrapper">
+          <img [src]="imagePreviewUrl" alt="Cover preview" class="image-preview">
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2 class="section-title">Privacy Settings</h2>
+      <div class="privacy-option">
+        <label class="checkbox-container">
+          <input type="checkbox" formControlName="isPublic" [disabled]="uploading">
+          <span class="checkmark"></span>
+          <span class="checkbox-label">Make this playlist public</span>
+        </label>
+        <p class="privacy-description">
+          Public playlists can be viewed by anyone. Private playlists are only visible to you.
+        </p>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a mat-stroked-button class="btn-cancel" routerLink="/home" [class.disabled]="uploading">Cancel</a>
+      <button mat-raised-button class="btn-upload" (click)="onSubmit()" [disabled]="uploading || !isFormValid">
+        <mat-spinner *ngIf="uploading" diameter="20" class="spinner-inline"></mat-spinner>
+        <mat-icon *ngIf="!uploading">library_add</mat-icon>
+        <span>{{ uploading ? 'Creating...' : 'Create Playlist' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

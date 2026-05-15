@@ -1,0 +1,121 @@
+<div class="upload-container">
+  <div class="header-section">
+    <h1 class="page-title">Upload Song</h1>
+    <p class="page-subtitle">Share your music with the Aloafy community</p>
+  </div>
+
+  <form [formGroup]="songForm" (ngSubmit)="onSubmit()">
+    <div class="content-section">
+      <h2 class="section-title">Song Details</h2>
+      
+      <div class="input-group">
+        <label for="title" class="input-label">Title *</label>
+        <input id="title" 
+               type="text" 
+               class="input-field"
+               [class.error]="songForm.get('title')?.invalid && songForm.get('title')?.touched"
+               formControlName="title"
+               placeholder="Enter song title" 
+               [disabled]="uploading" 
+               maxlength="100">
+        
+        <div class="error-container" *ngIf="songForm.get('title')?.invalid && songForm.get('title')?.touched">
+          <span class="error-message" *ngIf="songForm.get('title')?.hasError('required')">Title is required</span>
+          <span class="error-message" *ngIf="songForm.get('title')?.hasError('minlength')">Title must be at least 2 characters</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="artist" class="input-label">Artist *</label>
+        <input id="artist" 
+               type="text" 
+               class="input-field"
+               [class.error]="songForm.get('artist')?.invalid && songForm.get('artist')?.touched"
+               formControlName="artist"
+               placeholder="Enter artist name" 
+               [disabled]="uploading" 
+               maxlength="100">
+        
+        <div class="error-container" *ngIf="songForm.get('artist')?.invalid && songForm.get('artist')?.touched">
+          <span class="error-message" *ngIf="songForm.get('artist')?.hasError('required')">Artist is required</span>
+          <span class="error-message" *ngIf="songForm.get('artist')?.hasError('minlength')">Artist name must be at least 2 characters</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <h2 class="section-title">Media Files</h2>
+
+      <div class="input-group">
+        <label class="input-label">Audio File *</label>
+        <div class="file-upload-wrapper">
+          <input type="file" id="songFile" accept="audio/*" (change)="onSongFileSelected($event)" [disabled]="uploading" class="file-input-hidden">
+          <label for="songFile" class="file-upload-box" [class.has-file]="songFile" [class.error]="songFileError">
+            <div class="file-upload-content">
+              <mat-icon class="file-icon">{{ songFile ? 'audio_file' : 'cloud_upload' }}</mat-icon>
+              <div class="file-info">
+                <span class="file-name">{{ songFile?.name || 'Choose audio file' }}</span>
+                <span class="file-hint">MP3, WAV (max 50MB)</span>
+              </div>
+            </div>
+          </label>
+          <button *ngIf="songFile" mat-icon-button class="clear-file-btn" (click)="clearSongFile()" [disabled]="uploading" type="button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <span class="error-message" *ngIf="songFileError">{{ songFileError }}</span>
+
+        <div *ngIf="audioPreviewUrl" class="preview-container">
+          <div class="preview-header">
+            <mat-icon class="preview-icon">headphones</mat-icon>
+            <span class="preview-label">Audio Preview</span>
+          </div>
+          <audio controls class="audio-preview" [src]="audioPreviewUrl"></audio>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Cover Image *</label>
+        <div class="file-upload-wrapper">
+          <input type="file" id="imageFile" accept="image/*" (change)="onImageFileSelected($event)" [disabled]="uploading" class="file-input-hidden">
+          <label for="imageFile" class="file-upload-box" [class.has-file]="imageFile" [class.error]="imageFileError">
+            <div class="file-upload-content">
+              <mat-icon class="file-icon">{{ imageFile ? 'image' : 'add_photo_alternate' }}</mat-icon>
+              <div class="file-info">
+                <span class="file-name">{{ imageFile?.name || 'Choose cover image' }}</span>
+                <span class="file-hint">JPG, PNG (max 5MB)</span>
+              </div>
+            </div>
+          </label>
+          <button *ngIf="imageFile" mat-icon-button class="clear-file-btn" (click)="clearImageFile()" [disabled]="uploading" type="button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <span class="error-message" *ngIf="imageFileError">{{ imageFileError }}</span>
+
+        <div *ngIf="imagePreviewUrl" class="preview-container">
+          <div class="preview-header">
+            <mat-icon class="preview-icon">photo_library</mat-icon>
+            <span class="preview-label">Cover Image Preview</span>
+          </div>
+          <div class="image-preview-wrapper">
+            <img [src]="imagePreviewUrl" alt="Cover preview" class="cover-preview">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" mat-button (click)="cancel()" [disabled]="uploading">Cancel</button>
+      <button type="submit" 
+              mat-raised-button 
+              color="primary" 
+              class="submit-btn"
+              [disabled]="!isFormValid || uploading">
+        <mat-icon *ngIf="!uploading">upload</mat-icon>
+        <mat-spinner diameter="20" *ngIf="uploading"></mat-spinner>
+        <span>{{ uploading ? 'Uploading...' : 'Publish Song' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

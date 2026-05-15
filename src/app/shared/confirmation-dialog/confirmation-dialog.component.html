@@ -1,0 +1,28 @@
+<div class="confirmation-dialog">
+  <button class="close-button" mat-icon-button (click)="onCancel()">
+    <span class="close-icon">&times;</span>
+  </button>
+
+  <div class="dialog-icon" [ngClass]="getIconClass()">
+    <span class="icon-text">{{ getIconSymbol() }}</span>
+  </div>
+
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+
+  <mat-dialog-content>
+    <p class="message">{{ data.message }}</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="center">
+    <button mat-stroked-button class="cancel-btn" (click)="onCancel()">
+      {{ data.cancelText }}
+    </button>
+    
+    <button mat-flat-button 
+            class="confirm-btn" 
+            [ngClass]="getConfirmButtonClass()" 
+            (click)="onConfirm()">
+      {{ data.confirmText }}
+    </button>
+  </mat-dialog-actions>
+</div>

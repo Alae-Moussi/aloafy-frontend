@@ -1,0 +1,211 @@
+<div class="expanded-player" #expandedPlayerContainer [class.visible]="isExpanded" [class.scroll-disabled]="isAiPanelActive" *ngIf="currentSong">
+  <div class="background-gradient"></div>
+
+  <!-- Bouton Fermer -->
+  <button class="close-btn" (click)="collapse()" title="Collapse">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+
+  <div class="player-content">
+    <!-- SECTION PRINCIPALE (Lecteur) -->
+    <div class="main-section">
+      <!-- Image de l'album et vagues -->
+      <div class="album-art-container" [class.playing]="isPlaying">
+        <div class="water-waves" *ngIf="isPlaying">
+          <div class="wave-ring wave-ring-1"></div>
+          <div class="wave-ring wave-ring-2"></div>
+          <div class="wave-ring wave-ring-3"></div>
+          <div class="wave-ring wave-ring-4"></div>
+          <div class="wave-ring wave-ring-5"></div>
+          <div class="wave-ring wave-ring-6"></div>
+        </div>
+        <div class="album-art-glow" [class.active]="isPlaying"></div>
+        <img [src]="currentSong.imageUrl | authImage" [alt]="currentSong.title" class="album-art">
+      </div>
+
+      <!-- Titre et Artiste -->
+      <div class="song-info-section">
+        <div class="song-info">
+          <h1 class="song-title">{{ currentSong.title }}</h1>
+          <p class="artist-name">{{ currentSong.artist }}</p>
+        </div>
+      </div>
+
+      <!-- Contrôles et Sliders -->
+      <div class="controls-section">
+        <!-- Barre de progression -->
+        <div class="progress-section">
+          <span class="time">{{ formatTime(currentTime) }}</span>
+          <div class="progress-wrapper" (click)="onProgressClick($event)">
+            <div class="progress-background"></div>
+            <div class="progress-fill" [style.width.%]="progress"></div>
+            <input type="range" class="progress-bar" [value]="currentTime" [max]="duration" (input)="onProgressChange($event)" step="0.1">
+          </div>
+          <span class="time">{{ formatTime(duration) }}</span>
+        </div>
+
+        <!-- Boutons Multimedia -->
+        <div class="control-buttons">
+          <button class="control-btn" [class.active]="isShuffle" (click)="toggleShuffle()" [title]="isShuffle ? 'Disable shuffle' : 'Enable shuffle'">
+            <mat-icon>shuffle</mat-icon>
+          </button>
+
+          <button class="control-btn" (click)="playPrevious()" title="Previous">
+            <mat-icon>skip_previous</mat-icon>
+          </button>
+
+          <button class="control-btn play-btn" (click)="togglePlayPause()" [title]="isPlaying ? 'Pause' : 'Play'">
+            <mat-icon *ngIf="!isPlaying">play_arrow</mat-icon>
+            <mat-icon *ngIf="isPlaying">pause</mat-icon>
+          </button>
+
+          <button class="control-btn" (click)="playNext()" title="Next">
+            <mat-icon>skip_next</mat-icon>
+          </button>
+
+          <button class="control-btn" [class.active]="repeatMode !== 'off'" (click)="toggleRepeat()">
+            <mat-icon>{{ repeatMode === 'one' ? 'repeat_one' : 'repeat' }}</mat-icon>
+          </button>
+        </div>
+
+        <!-- Volume -->
+        <div class="volume-section">
+          <mat-icon *ngIf="volume > 0.5">volume_up</mat-icon>
+          <mat-icon *ngIf="volume <= 0.5 && volume > 0">volume_down</mat-icon>
+          <mat-icon *ngIf="volume === 0">volume_off</mat-icon>
+          
+          <div class="volume-wrapper" (click)="onVolumeClick($event)">
+            <div class="volume-background"></div>
+            <div class="volume-fill" [style.width.%]="volumePercentage"></div>
+            <input type="range" class="volume-slider" [value]="volume" min="0" max="1" step="0.01" (input)="onVolumeChange($event)">
+          </div>
+        </div>
+
+        <!-- Bouton AI Insights -->
+        <div class="ai-button-wrapper">
+          <button class="ai-btn" (click)="toggleAiPanel()" title="AI Insights" [class.active]="showAiPanel">
+            <div class="ai-btn-gradient"></div>
+            <div class="ai-btn-content">
+              <span class="ai-robot-icon">🤖</span>
+              <span class="ai-label">AI Insights</span>
+            </div>
+          </button>
+          
+          <div class="flying-particles-container" *ngIf="showFlyingParticles">
+            <div class="flying-particle" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]" [style.animation-delay]="(i * 0.075) + 's'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION QUEUE (File d'attente) -->
+    <div class="queue-section">
+      <h2 class="queue-title">Queue</h2>
+      <div class="queue-list">
+        <div *ngFor="let song of queue; let i = index" 
+             class="queue-item" 
+             [class.active]="i === currentIndex" 
+             (click)="playFromQueue(i)">
+          
+          <div class="queue-item-thumbnail">
+            <img [src]="song.imageUrl | authImage" [alt]="song.title">
+            <div class="queue-item-overlay" *ngIf="i === currentIndex && isPlaying">
+              <mat-icon class="queue-play-icon">play_arrow</mat-icon>
+            </div>
+          </div>
+
+          <div class="queue-item-info">
+            <div class="queue-item-title" [class.playing]="i === currentIndex">
+              {{ song.title }}
+            </div>
+            <div class="queue-item-artist">{{ song.artist }}</div>
+          </div>
+          
+          <div class="queue-item-number" *ngIf="i !== currentIndex">{{ i + 1 }}</div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- Fin de player-content -->
+
+  <!-- PANNEAU COULISSANT AI INSIGHTS -->
+  <div class="ai-panel" #aiPanel [class.visible]="showAiPanel" [style.top.px]="aiPanelTop">
+    <div class="ai-panel-header">
+      <h3 class="ai-panel-title">
+        <span class="ai-icon">🤖</span> AI Insights
+      </h3>
+      <button class="ai-panel-close" (click)="toggleAiPanel()" title="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Contenu IA -->
+    <div class="ai-panel-content" *ngIf="!loadingAiData && aiSongData">
+      <div class="ai-section" [@fadeInUp]>
+        <h4 class="ai-section-title"><span class="title-icon">💬</span> Song Analysis</h4>
+        <p class="ai-text">{{ aiSongData.analysis }}</p>
+      </div>
+
+      <div class="ai-section" [@fadeInUp]>
+        <h4 class="ai-section-title"><span class="title-icon">🎵</span> Musical Elements</h4>
+        <div class="ai-info-grid">
+          <div class="ai-info-item"><span class="info-label">Genre</span><span class="info-value">{{ aiSongData.genre }}</span></div>
+          <div class="ai-info-item"><span class="info-label">Tempo</span><span class="info-value">{{ aiSongData.tempo }} BPM</span></div>
+          <div class="ai-info-item"><span class="info-label">Key</span><span class="info-value">{{ aiSongData.key }}</span></div>
+          <div class="ai-info-item"><span class="info-label">Energy</span><span class="info-value">{{ aiSongData.energy }}</span></div>
+        </div>
+      </div>
+
+      <div class="ai-section" [@fadeInUp]>
+        <h4 class="ai-section-title"><span class="title-icon">✨</span> Mood & Vibe</h4>
+        <div class="ai-tags">
+          <span class="ai-tag" *ngFor="let mood of aiSongData.moods">{{ mood }}</span>
+        </div>
+      </div>
+
+      <div class="ai-section" [@fadeInUp]>
+        <h4 class="ai-section-title"><span class="title-icon">👥</span> Similar Artists</h4>
+        <div class="ai-tags">
+          <span class="ai-tag artist-tag" *ngFor="let artist of aiSongData.similarArtists">{{ artist }}</span>
+        </div>
+      </div>
+
+      <div class="ai-section" [@fadeInUp]>
+        <h4 class="ai-section-title"><span class="title-icon">💡</span> Perfect For</h4>
+        <p class="ai-text">{{ aiSongData.recommendedFor }}</p>
+      </div>
+    </div>
+
+    <!-- Chargement IA -->
+    <div class="ai-loading" *ngIf="loadingAiData">
+      <div class="ai-brain-container">
+        <mat-icon class="ai-brain-icon">psychology</mat-icon>
+        <div class="ai-particles"><div class="particle" *ngFor="let i of [1,2,3,4,5,6,7,8]"></div></div>
+        <div class="ai-dots-orbit"><div class="orbit-dot" *ngFor="let i of [1,2,3]"></div></div>
+      </div>
+      <div class="ai-status-container">
+        <p class="ai-status-text">
+          <span class="status-icon">🤖</span>
+          <span class="typing-text">AI is analyzing your song...</span>
+        </p>
+        <div class="ai-progress-steps">
+          <div class="progress-step" [class.active]="currentLoadingStep >= 0">
+            <span class="step-icon">🎵</span><span class="step-text">Analyzing musical elements</span>
+          </div>
+          <div class="progress-step" [class.active]="currentLoadingStep >= 1">
+            <span class="step-icon">✨</span><span class="step-text">Detecting mood & vibe</span>
+          </div>
+          <div class="progress-step" [class.active]="currentLoadingStep >= 2">
+            <span class="step-icon">🎯</span><span class="step-text">Finding similar artists</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Erreur IA -->
+    <div class="ai-error" *ngIf="aiError && !loadingAiData">
+      <mat-icon class="ai-error-icon">error_outline</mat-icon>
+      <p class="ai-error-text">{{ aiError }}</p>
+      <button class="ai-retry-btn" (click)="loadAiInsights()">Try Again</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="playlist-detail-container">
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="60" color="accent"></mat-spinner>
+    <p class="loading-text">Loading playlist...</p>
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button mat-raised-button color="accent" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Go Back
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && playlist" class="content">
+    
+    <div class="playlist-header">
+      <div class="playlist-cover" [ngClass]="{'has-image': playlist.imageUrl}">
+        <img *ngIf="playlist.imageUrl" [src]="playlist.imageUrl | authImage" [alt]="playlist.name" class="cover-image">
+        <mat-icon *ngIf="!playlist.imageUrl" class="cover-icon">library_music</mat-icon>
+      </div>
+
+      <div class="playlist-info">
+        <p class="playlist-type">PLAYLIST</p>
+        <h1 class="playlist-name">{{ playlist.name }}</h1>
+        <p class="playlist-description" *ngIf="playlist.description">
+          {{ playlist.description }}
+        </p>
+        
+        <div class="playlist-meta">
+          <span class="meta-item">{{ playlist.appUserName }}</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">{{ playlist.songCount }} {{ playlist.songCount === 1 ? 'song' : 'songs' }}</span>
+          <span class="meta-separator">•</span>
+          <span class="meta-item">{{ playlist.isPublic ? 'Public' : 'Private' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button mat-fab extended color="primary" class="play-button" (click)="playAll()" 
+              [disabled]="playlist.songCount === 0">
+        <mat-icon>play_arrow</mat-icon>
+        Play All
+      </button>
+
+      <button *ngIf="isOwner" mat-icon-button class="action-btn" (click)="togglePrivacy()"
+              [title]="playlist.isPublic ? 'Make Private' : 'Make Public'">
+        <mat-icon>{{ playlist.isPublic ? 'lock_open' : 'lock' }}</mat-icon>
+      </button>
+
+      <button *ngIf="isOwner" mat-icon-button class="action-btn delete-btn" (click)="deletePlaylist()"
+              title="Delete Playlist">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <div class="songs-section" *ngIf="playlist.songCount > 0">
+      <div class="songs-table">
+        <div class="table-header">
+          <div class="header-index">#</div>
+          <div class="header-title">TITLE</div>
+          <div class="header-date">DATE ADDED</div>
+          <div class="header-actions">ACTIONS</div>
+        </div>
+
+        <div cdkDropList [cdkDropListDisabled]="!isOwner" (cdkDropListDropped)="onSongDrop($event)">
+          <div *ngFor="let song of playlist.songs; let i = index" 
+               class="song-row" 
+               cdkDrag 
+               [cdkDragDisabled]="!isOwner"
+               [ngClass]="{'now-playing': isCurrentlyPlaying(song.songId)}"
+               (click)="playSong(song)">
+            
+            <div class="song-index">
+              <mat-icon *ngIf="isOwner" class="drag-handle" cdkDragHandle>drag_indicator</mat-icon>
+              <span class="index-number">{{ i + 1 }}</span>
+              <button mat-icon-button class="play-button-small">
+                <mat-icon>play_arrow</mat-icon>
+              </button>
+            </div>
+
+            <div class="song-info">
+              <img [src]="song.imageUrl | authImage" [alt]="song.title" class="song-thumbnail">
+              <div class="song-text">
+                <h4 class="song-title">{{ song.title }}</h4>
+                <p class="song-artist">{{ song.artist }}</p>
+              </div>
+            </div>
+
+            <div class="song-date">
+              <p class="date-text">{{ song.addedAt | date: 'MMM d, y' }}</p>
+            </div>
+
+            <div class="song-actions">
+              <button *ngIf="isOwner" class="reorder-button" (click)="moveSongUp($event, song, i)"
+                      [disabled]="i === 0" title="Move up">
+                <mat-icon>arrow_upward</mat-icon>
+              </button>
+              <button *ngIf="isOwner" class="reorder-button" (click)="moveSongDown($event, song, i)"
+                      [disabled]="i === playlist.songs.length - 1" title="Move down">
+                <mat-icon>arrow_downward</mat-icon>
+              </button>
+              <button *ngIf="isOwner" mat-icon-button class="remove-button"
+                      (click)="removeSongFromPlaylist($event, song)" title="Remove from playlist">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="playlist.songCount === 0" class="empty-songs">
+      <mat-icon class="empty-icon">music_note</mat-icon>
+      <h3>No songs in this playlist</h3>
+      <p>Start adding songs to build your collection!</p>
+    </div>
+
+  </div>
+</div>

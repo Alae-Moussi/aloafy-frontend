@@ -1,0 +1,587 @@
+/* Override Material Dialog Width */
+::ng-deep .edit-song-dialog .mat-mdc-dialog-container {
+  max-width: 1200px !important;
+  width: 90vw !important;
+  background-color: #1a1a1a;
+  border: 2px solid rgba(30, 215, 96, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 60px rgba(30, 215, 96, 0.15);
+  overflow: hidden;
+}
+
+::ng-deep .edit-song-dialog .mat-mdc-dialog-surface {
+  max-width: 1200px !important;
+  width: 90vw !important;
+}
+
+::ng-deep .cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+/* Dialog Container */
+.dialog-container {
+  min-width: 800px;
+  max-width: 1200px;
+  width: 100%;
+  background-color: transparent;
+  color: var(--app-white);
+}
+
+.dialog-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--app-white);
+  letter-spacing: -0.5px;
+  margin: 0;
+  padding: 24px 24px 16px 24px;
+  background: linear-gradient(135deg, rgba(30, 215, 96, 0.1) 0%, rgba(30, 215, 96, 0.05) 100%);
+  border-bottom: 1px solid rgba(30, 215, 96, 0.2);
+}
+
+.dialog-content {
+  padding: 24px 24px 16px 24px !important;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Upload Container */
+.upload-container {
+  padding: 0;
+}
+
+/* Content Sections */
+.content-section {
+  margin-top: 24px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.content-section:first-child {
+  margin-top: 0;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--app-primary);
+  letter-spacing: -0.5px;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(30, 215, 96, 0.2);
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-white);
+  margin-bottom: 10px;
+}
+
+/* Text Input Fields */
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  color: var(--app-white);
+  font-size: 16px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.input-field:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(30, 215, 96, 0.4);
+  box-shadow: 0 2px 8px rgba(30, 215, 96, 0.1);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--app-primary);
+  border-width: 2px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 12px rgba(30, 215, 96, 0.3);
+}
+
+.input-field::placeholder {
+  color: var(--app-gray);
+  opacity: 0.7;
+}
+
+/* Error States */
+.input-field.error {
+  border-color: #e74c3c;
+}
+
+.input-field.error:focus {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.error-message {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+.file-upload-box.error {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.file-upload-box.error:hover {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* File Upload Wrapper */
+.file-upload-wrapper {
+  position: relative;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+/* File Upload Box */
+.file-upload-box {
+  display: block;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-upload-box:hover {
+  border-color: var(--app-primary);
+  background-color: rgba(30, 215, 96, 0.05);
+}
+
+.file-upload-box.has-file {
+  background-color: rgba(30, 215, 96, 0.1);
+  border-color: var(--app-primary);
+  border-style: solid;
+}
+
+/* File Upload Content */
+.file-upload-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.file-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: var(--app-gray);
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.file-upload-box:hover .file-icon {
+  color: var(--app-primary);
+}
+
+.file-upload-box.has-file .file-icon {
+  color: var(--app-primary);
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.file-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--app-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-hint {
+  font-size: 13px;
+  color: var(--app-gray);
+  line-height: 1.4;
+}
+
+/* Clear File Button */
+.clear-file-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: var(--app-white) !important;
+  width: 36px !important;
+  height: 36px !important;
+  z-index: 10;
+  transition: all 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.clear-file-btn mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  line-height: 1 !important;
+}
+
+.clear-file-btn:hover {
+  background-color: rgba(231, 76, 60, 0.9) !important;
+  color: #fff !important;
+  transform: scale(1.1);
+}
+
+/* Preview Container */
+.preview-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.preview-container.current-media {
+  background-color: rgba(29, 185, 84, 0.05);
+  border: 1px solid rgba(29, 185, 84, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.preview-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--app-primary);
+}
+
+.preview-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-white);
+}
+
+/* Audio Preview */
+.audio-preview {
+  width: 100%;
+  height: 40px;
+  outline: none;
+}
+
+.audio-preview::-webkit-media-controls-panel {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.audio-preview::-webkit-media-controls-play-button,
+.audio-preview::-webkit-media-controls-current-time-display,
+.audio-preview::-webkit-media-controls-time-remaining-display {
+  color: var(--app-white);
+}
+
+.audio-preview::-webkit-media-controls-timeline {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* Image Preview */
+.image-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.image-preview {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.image-preview:hover {
+  transform: scale(1.02);
+}
+
+/* Current Song Section */
+.current-song-section {
+  padding: 20px;
+  background-color: rgba(30, 215, 96, 0.05);
+  border: 1px solid rgba(30, 215, 96, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.current-song-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.current-thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.current-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.current-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--app-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.current-artist {
+  font-size: 14px;
+  color: var(--app-gray);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+/* Dialog Actions */
+.dialog-actions {
+  padding: 20px 24px !important;
+  border-top: 2px solid rgba(30, 215, 96, 0.2);
+  background: linear-gradient(180deg, rgba(30, 215, 96, 0.05) 0%, transparent 100%);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin: 0 !important;
+}
+
+.btn-cancel,
+.btn-save {
+  min-width: 140px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 24px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+/* Cancel Button */
+.btn-cancel {
+  color: var(--app-gray) !important;
+  font-weight: 600;
+  border: 1.5px solid transparent !important;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  color: var(--app-white) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+.btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Save Button */
+.btn-save {
+  background-color: var(--app-primary) !important;
+  color: #000 !important;
+  font-weight: 700;
+  padding: 0 32px;
+  border: 2px solid var(--app-primary) !important;
+  box-shadow: 0 4px 12px rgba(30, 215, 96, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-save mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.btn-save:hover:not(:disabled) {
+  background-color: #1ed760 !important;
+  border-color: #1ed760 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30, 215, 96, 0.5);
+}
+
+.btn-save:disabled {
+  background-color: rgba(29, 185, 84, 0.2) !important;
+  border-color: rgba(29, 185, 84, 0.2) !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Scrollbar Styling */
+.dialog-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dialog-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.dialog-content::-webkit-scrollbar-thumb {
+  background: var(--app-gray);
+  border-radius: 4px;
+}
+
+.dialog-content::-webkit-scrollbar-thumb:hover {
+  background: var(--app-white);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dialog-container {
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+
+  .dialog-title {
+    font-size: 24px;
+    padding: 20px 20px 0 20px;
+  }
+
+  .dialog-content {
+    padding: 0 20px 20px 20px !important;
+  }
+
+  .section-title {
+    font-size: 18px;
+  }
+
+  .input-field {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .file-upload-box {
+    padding: 16px;
+  }
+
+  .file-upload-content {
+    gap: 12px;
+  }
+
+  .file-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .file-name {
+    font-size: 15px;
+  }
+
+  .file-hint {
+    font-size: 12px;
+  }
+
+  .preview-container {
+    padding: 16px;
+  }
+
+  .image-preview-wrapper {
+    max-width: 100%;
+  }
+
+  .image-preview {
+    max-width: 100%;
+  }
+
+  .current-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+
+  .current-title {
+    font-size: 16px;
+  }
+
+  .current-artist {
+    font-size: 13px;
+  }
+
+  .dialog-actions {
+    padding: 12px 20px !important;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+    min-width: auto;
+  }
+}

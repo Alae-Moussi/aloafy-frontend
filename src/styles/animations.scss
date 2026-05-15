@@ -1,0 +1,418 @@
+/*ALOAfy Common Animations */
+
+/* ============================================
+   FADE ANIMATIONS
+   ============================================ */
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out backwards;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fadeIn 0.6s ease-out 0.3s backwards;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 0.6s ease-out 0.6s backwards;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fadeIn 0.6s ease-out 0.9s backwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================
+   SLIDE ANIMATIONS
+   ============================================ */
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.6s ease-out backwards;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.6s ease-out backwards;
+}
+
+.animate-slide-right {
+  animation: slideRight 0.6s ease-out backwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================
+   SCALE ANIMATIONS
+   ============================================ */
+
+.animate-scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.animate-scale-in-center {
+  animation: scaleInCenter 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleInCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================
+   GLOW ANIMATIONS
+   ============================================ */
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.animate-glow-green {
+  animation: glowGreen 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.6))
+            drop-shadow(0 0 30px rgba(255, 255, 255, 0.4));
+  }
+}
+
+@keyframes glowGreen {
+  0%, 100% {
+    filter: drop-shadow(0 4px 12px rgba(29, 185, 84, 0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 4px 20px rgba(29, 185, 84, 0.6))
+            drop-shadow(0 0 30px rgba(30, 215, 96, 0.4));
+    transform: scale(1.02);
+  }
+}
+
+/* ============================================
+   PULSE ANIMATIONS
+   ============================================ */
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* ============================================
+   SHAKE ANIMATION
+   ============================================ */
+
+.animate-shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* ============================================
+   BOUNCE ANIMATION
+   ============================================ */
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================
+   ROTATE ANIMATIONS
+   ============================================ */
+
+.animate-rotate {
+  animation: rotate 1s linear infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   FLOAT ANIMATION
+   ============================================ */
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================
+   SHIMMER EFFECT
+   ============================================ */
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(29, 185, 84, 0.05) 50%,
+    transparent 70%
+  );
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ============================================
+   EXPAND ANIMATION
+   ============================================ */
+
+.animate-expand-x {
+  animation: expandX 1s ease-out backwards;
+}
+
+.animate-expand-y {
+  animation: expandY 1s ease-out backwards;
+}
+
+@keyframes expandX {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes expandY {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   STAGGERED CHILDREN
+   ============================================ */
+
+.animate-stagger > *:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.animate-stagger > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.animate-stagger > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.animate-stagger > *:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.animate-stagger > *:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.animate-stagger > *:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+.animate-stagger > *:nth-child(7) {
+  animation-delay: 0.6s;
+}
+
+.animate-stagger > *:nth-child(8) {
+  animation-delay: 0.7s;
+}
+
+/* ============================================
+   HOVER EFFECTS
+   ============================================ */
+
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow-green {
+  transition: filter 0.3s ease;
+}
+
+.hover-glow-green:hover {
+  filter: drop-shadow(0 4px 20px rgba(29, 185, 84, 0.7))
+          drop-shadow(0 0 40px rgba(30, 215, 96, 0.5));
+}
+
+.hover-brightness {
+  transition: filter 0.3s ease;
+}
+
+.hover-brightness:hover {
+  filter: brightness(1.2);
+}
+
+/* ============================================
+   DELAY CLASSES
+   ============================================ */
+
+.delay-100 { animation-delay: 0.1s !important; }
+.delay-200 { animation-delay: 0.2s !important; }
+.delay-300 { animation-delay: 0.3s !important; }
+.delay-400 { animation-delay: 0.4s !important; }
+.delay-500 { animation-delay: 0.5s !important; }
+.delay-600 { animation-delay: 0.6s !important; }
+.delay-700 { animation-delay: 0.7s !important; }
+.delay-800 { animation-delay: 0.8s !important; }
+.delay-900 { animation-delay: 0.9s !important; }
+.delay-1000 { animation-delay: 1s !important; }
+
+/* ============================================
+   DURATION CLASSES
+   ============================================ */
+
+.duration-fast { animation-duration: 0.3s !important; }
+.duration-normal { animation-duration: 0.6s !important; }
+.duration-slow { animation-duration: 1s !important; }
+.duration-slower { animation-duration: 2s !important; }

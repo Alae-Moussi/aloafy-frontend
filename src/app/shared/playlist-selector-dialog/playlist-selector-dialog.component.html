@@ -1,0 +1,71 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>Add to Playlist</h2>
+
+  <mat-dialog-content>
+    <div class="song-info">
+      <img [src]="data.song.imageUrl" [alt]="data.song.title" class="song-thumbnail">
+      <div class="song-details">
+        <h4 class="song-title">{{ data.song.title }}</h4>
+        <p class="song-artist">{{ data.song.artist }}</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="40" color="accent"></mat-spinner>
+      <p class="loading-text">Loading Playlists...</p>
+    </div>
+
+    <div *ngIf="!loading && errorMessage && playlists.length === 0" class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <p class="error-message">{{ errorMessage }}</p>
+      <button mat-raised-button color="accent" (click)="loadPlaylists()">
+        <mat-icon>refresh</mat-icon>
+        Try Again
+      </button>
+    </div>
+
+    <div *ngIf="!loading && playlists.length > 0" class="playlists-container">
+      <h3 class="playlists-heading">Select a Playlist</h3>
+      <div class="playlists-list">
+        <button *ngFor="let playlist of playlists" 
+                class="playlist-option"
+                [class.adding]="selectedPlaylistId === playlist.id"
+                [disabled]="adding"
+                (click)="addToPlaylist(playlist)">
+          
+          <div class="playlist-option-content">
+            <mat-icon class="playlist-icon">library_music</mat-icon>
+            <div class="playlist-info">
+              <span class="playlist-name">{{ playlist.name }}</span>
+              <span class="playlist-privacy">{{ playlist.isPublic ? 'Public' : 'Private' }}</span>
+            </div>
+          </div>
+
+          <mat-spinner *ngIf="selectedPlaylistId === playlist.id && adding" 
+                       diameter="20" class="playlist-spinner"></mat-spinner>
+          <mat-icon *ngIf="selectedPlaylistId !== playlist.id || !adding" 
+                    class="add-icon">add</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="loadingMorePlaylists" class="loading-more-container">
+        <mat-spinner diameter="24"></mat-spinner>
+      </div>
+      <div #scrollTriggerPlaylists class="scroll-trigger"></div>
+    </div>
+
+    <div *ngIf="!loading && playlists.length === 0 && !errorMessage" class="empty-state">
+      <mat-icon class="empty-icon">library_music</mat-icon>
+      <h3>No playlists yet</h3>
+      <p>Create a playlist to start organizing your music</p>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()" [disabled]="adding" class="close-btn">
+      Close
+    </button>
+  </mat-dialog-actions>
+</div>

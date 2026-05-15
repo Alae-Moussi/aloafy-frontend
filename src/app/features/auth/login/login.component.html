@@ -1,0 +1,150 @@
+<div class="auth-container">
+  <div class="auth-card animate-scale-in-center animate-shimmer">
+    
+    <div class="logo-container animate-slide-down">
+      <svg viewBox="0 0 64 64" class="app-logo">
+        <title>ALOAFY</title>
+        <defs>
+          <linearGradient id="loginLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color: #1ed760; stop-opacity: 1" />
+            <stop offset="100%" style="stop-color: #1db954; stop-opacity: 1" />
+          </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="30" fill="url(#loginLogoGradient)" opacity="0.15" />
+        <rect x="12" y="24" width="5" height="16" rx="2.5" fill="url(#loginLogoGradient)" />
+        <rect x="19" y="16" width="5" height="32" rx="2.5" fill="url(#loginLogoGradient)" />
+        <rect x="26" y="12" width="5" height="40" rx="2.5" fill="url(#loginLogoGradient)" />
+        <rect x="33" y="16" width="5" height="32" rx="2.5" fill="url(#loginLogoGradient)" />
+        <rect x="40" y="24" width="5" height="16" rx="2.5" fill="url(#loginLogoGradient)" />
+        <rect x="47" y="28" width="5" height="8" rx="2.5" fill="url(#loginLogoGradient)" />
+      </svg>
+    </div>
+
+    <h1 class="auth-title animate-fade-in delay-200">{{ pageTitle }}</h1>
+
+    <div *ngIf="isLoginView" class="auth-form animate-stagger">
+      <div *ngIf="loginError" class="error-message animate-shake">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ loginError }}</span>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <mat-form-field appearance="outline" class="auth-input animate-slide-right delay-300">
+          <mat-label>Email address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="email@example.com" autocomplete="email">
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="auth-input animate-slide-right delay-400">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <div class="forgot-password-link animate-fade-in delay-500">
+          <a class="auth-link hover-glow-green" (click)="showForgotPasswordView()">Forgot your Password?</a>
+        </div>
+
+        <button mat-raised-button class="btn-primary auth-submit animate-slide-up delay-600" 
+                type="submit" [disabled]="loginForm.invalid || loginLoading">
+          <span *ngIf="!loginLoading">Log In</span>
+          <mat-spinner *ngIf="loginLoading" diameter="24"></mat-spinner>
+        </button>
+      </form>
+
+      <div class="auth-divider animate-expand-x delay-700"><hr></div>
+
+      <div class="auth-footer animate-fade-in delay-800">
+        <p class="text-gray">Don't have an account?</p>
+        <a class="auth-link hover-glow-green" (click)="showSignUpView()">Sign up for ALOAFY</a>
+      </div>
+    </div>
+
+    <div *ngIf="isSignUpView" class="auth-form animate-stagger">
+      <p class="auth-description animate-fade-in delay-300">
+        Enter your details and we'll send a temporary password to your email.
+      </p>
+
+      <div *ngIf="signUpError" class="error-message animate-shake">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ signUpError }}</span>
+      </div>
+
+      <div *ngIf="signUpSuccess" class="success-message animate-fade-in">
+        <mat-icon>check_circle</mat-icon>
+        <span>{{ signUpSuccess }}</span>
+      </div>
+
+      <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
+        <mat-form-field appearance="outline" class="auth-input animate-slide-right delay-400">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="name" placeholder="Your name" autocomplete="name">
+          <mat-error *ngIf="signUpForm.get('name')?.hasError('required')">Name is required</mat-error>
+          <mat-error *ngIf="signUpForm.get('name')?.hasError('minlength')">Name must be at least 2 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="auth-input animate-slide-right delay-500">
+          <mat-label>Email address</mat-label>
+          <input matInput formControlName="email" type="email" autocomplete="email">
+          <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="signUpForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button class="btn-primary auth-submit animate-slide-up delay-600" 
+                type="submit" [disabled]="signUpForm.invalid || signUpLoading">
+          <span *ngIf="!signUpLoading">Create Account</span>
+          <mat-spinner *ngIf="signUpLoading" diameter="24"></mat-spinner>
+        </button>
+      </form>
+
+      <div class="back-to-login animate-fade-in delay-700">
+        <a class="back-to-login-link" (click)="showLoginView()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Login
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="isForgotPasswordView" class="auth-form animate-stagger">
+      <p class="auth-description animate-fade-in delay-300">
+        Enter your email address and we'll send you a temporary password.
+      </p>
+      
+      <div *ngIf="forgotPasswordError" class="error-message animate-shake">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ forgotPasswordError }}</span>
+      </div>
+
+      <div *ngIf="forgotPasswordSuccess" class="success-message animate-fade-in">
+        <mat-icon>check_circle</mat-icon>
+        <span>{{ forgotPasswordSuccess }}</span>
+      </div>
+
+      <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPasswordSubmit()">
+        <mat-form-field appearance="outline" class="auth-input animate-slide-right delay-400">
+          <mat-label>Email address</mat-label>
+          <input matInput formControlName="email" type="email" autocomplete="email">
+          <mat-error *ngIf="forgotPasswordForm.get('email')?.hasError('required')">Email is required</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button class="btn-primary auth-submit animate-slide-up delay-600" 
+                type="submit" [disabled]="forgotPasswordForm.invalid || forgotPasswordLoading">
+          <span *ngIf="!forgotPasswordLoading">Send Reset Email</span>
+          <mat-spinner *ngIf="forgotPasswordLoading" diameter="24"></mat-spinner>
+        </button>
+      </form>
+
+      <div class="back-to-login animate-fade-in delay-700">
+        <a class="back-to-login-link" (click)="showLoginView()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Login
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

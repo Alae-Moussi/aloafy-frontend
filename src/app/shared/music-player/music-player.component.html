@@ -1,0 +1,83 @@
+<div class="player-container animate-slide-up" *ngIf="currentSong">
+  
+  <!-- Partie Gauche : Infos Chanson -->
+  <div class="player-left" (click)="expandPlayer()" style="cursor: pointer;">
+    <div class="song-thumbnail animate-scale-in">
+      <img [src]="getImageUrl(currentSong.imageUrl)" [alt]="currentSong.title">
+      
+      <!-- Animation ondes sonores si lecture en cours -->
+      <div class="sound-wave-overlay" *ngIf="isPlaying">
+        <div class="sound-wave-bar" [style.animation-duration]="(0.5 + volume * 0.3) + 's'"></div>
+        <div class="sound-wave-bar" [style.animation-duration]="(0.6 + volume * 0.3) + 's'"></div>
+        <div class="sound-wave-bar" [style.animation-duration]="(0.7 + volume * 0.3) + 's'"></div>
+        <div class="sound-wave-bar" [style.animation-duration]="(0.5 + volume * 0.3) + 's'"></div>
+      </div>
+    </div>
+
+    <div class="song-info animate-fade-in delay-200">
+      <h4 class="song-title">{{ currentSong.title }}</h4>
+      <p class="song-artist">{{ currentSong.artist }}</p>
+    </div>
+  </div>
+
+  <!-- Partie Centrale : Contrôles et Barre de progression -->
+  <div class="player-center">
+    <div class="control-buttons animate-fade-in delay-300">
+      <!-- Bouton Shuffle -->
+      <button mat-icon-button class="control-btn hover-scale" [class.active]="isShuffle" (click)="toggleShuffle()" title="Shuffle">
+        <mat-icon>shuffle</mat-icon>
+      </button>
+
+      <!-- Bouton Précédent -->
+      <button mat-icon-button class="control-btn hover-scale" [disabled]="!hasPrevious" (click)="skipPrevious()" title="Previous">
+        <mat-icon>skip_previous</mat-icon>
+      </button>
+
+      <!-- Bouton Play/Pause -->
+      <button mat-icon-button class="play-button hover-glow-green hover-scale" (click)="togglePlayPause()">
+        <mat-icon *ngIf="!isPlaying">play_circle_filled</mat-icon>
+        <mat-icon *ngIf="isPlaying">pause_circle_filled</mat-icon>
+      </button>
+
+      <!-- Bouton Suivant -->
+      <button mat-icon-button class="control-btn hover-scale" [disabled]="!hasNext" (click)="skipNext()" title="Next">
+        <mat-icon>skip_next</mat-icon>
+      </button>
+
+      <!-- Bouton Repeat -->
+      <button mat-icon-button class="control-btn hover-scale" [class.active]="repeatMode !== 'off'" (click)="toggleRepeat()" 
+              [title]="repeatMode === 'off' ? 'Repeat off' : (repeatMode === 'all' ? 'Repeat all' : 'Repeat one')">
+        <mat-icon>{{ getRepeatIcon() }}</mat-icon>
+      </button>
+    </div>
+
+    <!-- Barre de Progression -->
+    <div class="progress-bar-container">
+      <span class="time-label">{{ formatTime(currentTime) }}</span>
+      <div class="progress-wrapper" (click)="onProgressClick($event)">
+        <div class="progress-background"></div>
+        <div class="progress-fill" [style.width.%]="progress"></div>
+        <input type="range" min="0" [max]="duration" [value]="currentTime" class="progress-bar" (input)="onSeek($event)">
+      </div>
+      <span class="time-label">{{ formatTime(duration) }}</span>
+    </div>
+  </div>
+
+  <!-- Partie Droite : Volume -->
+  <div class="player-right animate-fade-in delay-400">
+    <!-- Bouton Mute/Unmute -->
+    <button mat-icon-button class="hover-scale" (click)="toggleMute()">
+      <mat-icon *ngIf="!isMuted && volume > 0.5">volume_up</mat-icon>
+      <mat-icon *ngIf="!isMuted && volume <= 0.5 && volume > 0">volume_down</mat-icon>
+      <mat-icon *ngIf="isMuted || volume === 0">volume_off</mat-icon>
+    </button>
+
+    <!-- Barre de Volume -->
+    <div class="volume-wrapper" (click)="onVolumeClick($event)">
+      <div class="volume-background"></div>
+      <div class="volume-fill" [style.width.%]="volumePercentage"></div>
+      <input type="range" min="0" max="1" step="0.01" [value]="volume" class="volume-bar" (input)="onVolumeChange($event)">
+    </div>
+  </div>
+
+</div>

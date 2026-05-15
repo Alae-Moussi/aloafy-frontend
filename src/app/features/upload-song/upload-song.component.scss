@@ -1,0 +1,520 @@
+/* Upload Song Container */
+.upload-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 48px;
+}
+
+.page-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--app-primary);
+  letter-spacing: -1px;
+  text-shadow: 0 0 20px rgba(30, 215, 96, 0.3);
+}
+
+.page-subtitle {
+  font-size: 18px;
+  color: var(--app-gray);
+  margin: 0;
+}
+
+/* Alert Messages */
+.success-alert,
+.error-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  font-size: 15px;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-alert {
+  background-color: rgba(30, 215, 96, 0.15);
+  color: var(--app-primary);
+  border: 1px solid var(--app-primary);
+}
+
+.success-alert mat-icon {
+  color: var(--app-primary);
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.error-alert {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #ff6b6b;
+  border: 1px solid #e74c3c;
+}
+
+.error-alert mat-icon {
+  color: #ff6b6b;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Content Sections */
+.content-section {
+  margin-top: 48px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--app-white);
+  letter-spacing: -0.5px;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 24px;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-white);
+  margin-bottom: 10px;
+}
+
+/* Text Input Fields */
+.input-field {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--app-white);
+  font-size: 16px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--app-primary);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.input-field:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-field::placeholder {
+  color: var(--app-gray);
+}
+
+/* Error States */
+.input-field.error {
+  border-color: #e74c3c;
+}
+
+.input-field.error:focus {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.error-message {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+.file-upload-box.error {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.file-upload-box.error:hover {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* File Upload Wrapper */
+.file-upload-wrapper {
+  position: relative;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+/* File Upload Box */
+.file-upload-box {
+  display: block;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-upload-box:hover {
+  border-color: var(--app-primary);
+  background-color: rgba(30, 215, 96, 0.05);
+}
+
+.file-upload-box.has-file {
+  background-color: rgba(30, 215, 96, 0.1);
+  border-color: var(--app-primary);
+  border-style: solid;
+}
+
+/* File Upload Content */
+.file-upload-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.file-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: var(--app-gray);
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.file-upload-box:hover .file-icon {
+  color: var(--app-primary);
+}
+
+.file-upload-box.has-file .file-icon {
+  color: var(--app-primary);
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.file-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--app-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-hint {
+  font-size: 13px;
+  color: var(--app-gray);
+  line-height: 1.4;
+}
+
+/* Clear File Button */
+.clear-file-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: var(--app-white) !important;
+  width: 36px !important;
+  height: 36px !important;
+  z-index: 10;
+  transition: all 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.clear-file-btn mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  line-height: 1 !important;
+}
+
+.clear-file-btn:hover {
+  background-color: rgba(231, 76, 60, 0.9) !important;
+  color: #fff !important;
+  transform: scale(1.1);
+}
+
+.clear-file-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Preview Container */
+.preview-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.preview-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--app-primary);
+}
+
+.preview-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-white);
+}
+
+/* Audio Preview */
+.audio-preview {
+  width: 100%;
+  height: 40px;
+  outline: none;
+}
+
+.audio-preview::-webkit-media-controls-panel {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.audio-preview::-webkit-media-controls-play-button,
+.audio-preview::-webkit-media-controls-current-time-display,
+.audio-preview::-webkit-media-controls-time-remaining-display {
+  color: var(--app-white);
+}
+
+.audio-preview::-webkit-media-controls-timeline {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* Image Preview */
+.image-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.image-preview {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.image-preview:hover {
+  transform: scale(1.02);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  padding-top: 32px;
+  margin-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-cancel,
+.btn-upload {
+  min-width: 140px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 24px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+/* Cancel Button */
+.btn-cancel {
+  color: var(--app-white) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  border-color: var(--app-white) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Upload Button */
+.btn-upload {
+  background-color: var(--app-primary) !important;
+  color: #000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-upload mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.btn-upload:hover:not(:disabled) {
+  background-color: var(--app-primary-hover) !important;
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
+}
+
+.btn-upload:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inline Spinner */
+.spinner-inline {
+  display: inline-block;
+}
+
+::ng-deep .spinner-inline .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #000 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-section {
+    margin-bottom: 32px;
+  }
+
+  .page-title {
+    font-size: 32px;
+  }
+
+  .page-subtitle {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .input-field {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .file-upload-box {
+    padding: 16px;
+  }
+
+  .file-upload-content {
+    gap: 12px;
+  }
+
+  .file-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .file-name {
+    font-size: 15px;
+  }
+
+  .file-hint {
+    font-size: 12px;
+  }
+
+  .preview-container {
+    padding: 16px;
+  }
+
+  .image-preview-wrapper {
+    max-width: 100%;
+  }
+
+  .image-preview {
+    max-width: 100%;
+  }
+
+  .action-buttons {
+    flex-direction: column-reverse;
+    gap: 12px;
+    padding-top: 24px;
+    margin-top: 24px;
+  }
+
+  .btn-cancel,
+  .btn-upload {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 28px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+}

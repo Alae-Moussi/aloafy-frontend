@@ -1,0 +1,178 @@
+<div class="home-container">
+  <div *ngIf="loading" class="loading-container animate-fade-in">
+    <mat-spinner diameter="60" color="accent" class="animate-pulse"></mat-spinner>
+    <p class="loading-text animate-fade-in delay-300">Loading your music...</p>
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="error-container animate-shake">
+    <mat-icon class="error-icon animate-bounce">error_outline</mat-icon>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button mat-raised-button color="accent" (click)="loadData()" class="animate-fade-in delay-300 hover-lift">
+      <mat-icon>refresh</mat-icon>
+      Try again
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage">
+    
+    <div class="welcome-section animate-fade-in">
+      <h1 class="welcome-title animate-slide-down">
+        Welcome to <span class="typing-text"></span>
+      </h1>
+      <p class="welcome-subtitle animate-fade-in delay-300">
+        Your personalized music streaming experience
+      </p>
+    </div>
+
+    <div class="content-section animate-fade-in delay-400">
+      <div class="section-header">
+        <h2 class="section-title animate-slide-right">Public Playlists</h2>
+        <button mat-icon-button class="toggle-button hover-scale" (click)="togglePlaylists()">
+          <mat-icon>{{ playlistsExpanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="playlistsExpanded" class="playlist-content-wrapper">
+        
+        <div class="search-section search-section-playlist">
+          <div class="search-bar">
+            <mat-icon class="search-icon">search</mat-icon>
+            <input type="text" 
+                   class="search-input" 
+                   placeholder="Search for playlists..."
+                   [(ngModel)]="playlistSearchQuery"
+                   (keyup.enter)="onSearchPlaylists()">
+            <button *ngIf="playlistSearchQuery" 
+                    mat-icon-button 
+                    class="clear-search-btn" 
+                    (click)="clearPlaylistSearch()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="playlists-scroll-container" *ngIf="playlists.length > 0">
+          <div class="playlists-grid">
+            <div *ngFor="let playlist of playlists" 
+                 class="playlist-card hover-lift animate-scale-in" 
+                 (click)="openPlaylist(playlist)">
+              
+              <div class="playlist-cover" [ngClass]="{'has-image' : playlist.imageUrl}">
+                <img *ngIf="playlist.imageUrl" 
+                     [src]="playlist.imageUrl | authImage" 
+                     [alt]="playlist.name" 
+                     class="playlist-cover-image">
+                <mat-icon *ngIf="!playlist.imageUrl" class="playlist-icon">library_music</mat-icon>
+                
+                <button mat-icon-button 
+                        class="play-button hover-glow-green hover-scale" 
+                        (click)="playPlaylist($event, playlist)">
+                  <mat-icon>play_arrow</mat-icon>
+                </button>
+              </div>
+
+              <div class="playlist-info">
+                <h3 class="playlist-name">{{ playlist.name }}</h3>
+                <p class="playlist-description">{{ playlist.description || 'No description' }}</p>
+                <p class="playlist-meta">By {{ playlist.appUserName }}</p>
+              </div>
+            </div>
+
+            <div class="playlist-loading-card" *ngIf="loadingMorePlaylists">
+              <mat-spinner diameter="40" color="accent" class="animate-pulse"></mat-spinner>
+              <p class="loading-text-small animate-fade-in">Loading...</p>
+            </div>
+
+            <div class="playlist-end-card" *ngIf="!loadingMorePlaylists && !hasMorePlaylists && playlists.length > 0">
+              <mat-icon class="end-icon">check_circle</mat-icon>
+              <p class="end-text-small">All playlists loaded</p>
+            </div>
+          </div>
+          
+          <div #scrollTriggerPlaylists class="scroll-trigger-horizontal"></div>
+        </div>
+
+        <div *ngIf="playlists.length === 0 && !loadingMorePlaylists" class="empty-state animate-fade-in">
+          <mat-icon class="empty-icon animate-float">library_music</mat-icon>
+          <h2 class="animate-fade-in delay-200">No playlists found</h2>
+          <p *ngIf="playlistSearchQuery" class="animate-fade-in delay-300">Try adjusting your search</p>
+          <p *ngIf="!playlistSearchQuery" class="animate-fade-in delay-300">Be the first to create a playlist!</p>
+        </div>
+
+      </div> 
+    </div>
+    <div class="content-section animate-fade-in delay-600">
+      <h2 class="section-title animate-slide-right">All Songs</h2>
+
+      <div class="search-section">
+        <div class="search-bar">
+          <mat-icon class="search-icon">search</mat-icon>
+          <input type="text" 
+                 class="search-input" 
+                 placeholder="Search for songs or artists..."
+                 [(ngModel)]="searchQuery"
+                 (keyup.enter)="onSearch()">
+          <button *ngIf="searchQuery" 
+                  mat-icon-button 
+                  class="clear-search-btn" 
+                  (click)="clearSearch()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="songs-list" *ngIf="songs.length > 0">
+        <div *ngFor="let song of songs; let i = index" 
+             class="song-item animate-fade-in hover-brightness"
+             [ngClass]="{'now-playing': isCurrentlyPlaying(song.id)}"
+             (click)="playSong(song)">
+          
+          <div class="song-index">{{ i + 1 }}</div>
+          
+          <div class="song-cover">
+            <img [src]="song.imageUrl | authImage" [alt]="song.title">
+            <button mat-icon-button class="play-button-small hover-glow-green hover-scale">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+          </div>
+
+          <div class="song-info">
+            <h4 class="song-title">{{ song.title }}</h4>
+            <p class="song-artist">{{ song.artist }}</p>
+          </div>
+
+          <div class="song-actions">
+            <button mat-icon-button 
+                    class="add-to-playlist-button hover-scale" 
+                    (click)="openAddToPlaylistDialog($event, song)" 
+                    title="Add to playlist">
+              <mat-icon>playlist_add</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="loading-more-container" *ngIf="loadingMore && songs.length > 0">
+          <mat-spinner diameter="40" color="accent" class="animate-pulse"></mat-spinner>
+          <p class="loading-more-text animate-fade-in">Loading more songs...</p>
+        </div>
+
+        <div #scrollTrigger class="scroll-trigger"></div>
+
+        <div class="end-of-list" *ngIf="!hasMoreSongs && !loadingMore && songs.length > 0">
+          <p>You've reached the end of the list</p>
+        </div>
+      </div>
+
+      <div *ngIf="songs.length === 0 && !loading" class="empty-state animate-fade-in">
+        <mat-icon class="empty-icon animate-float">music_note</mat-icon>
+        <h2 class="animate-fade-in delay-200">No songs found</h2>
+        <p *ngIf="searchQuery" class="animate-fade-in delay-300">Try adjusting your search</p>
+        <p *ngIf="!searchQuery" class="animate-fade-in delay-300">Start by uploading some songs!</p>
+      </div>
+
+    </div> 
+
+
+ </div>
+
+</div>
