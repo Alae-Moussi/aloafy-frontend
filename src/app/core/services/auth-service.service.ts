@@ -102,7 +102,7 @@ export class AuthServiceService {
     }
     return null;
   }
-
+//hay
   getAccessToken(): string | null {
     return isPlatformBrowser(this.platformId) ? localStorage.getItem('accessToken') : null;
   }
