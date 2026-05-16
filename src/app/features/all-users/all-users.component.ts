@@ -30,7 +30,7 @@ export class AllUsersComponent implements OnInit, OnDestroy {
   currentUserId: number | null = null;
 
   currentPage = 0;
-  pageSize = 10;
+  pageSize = 3;
   totalElements = 0;
   hasMoreUsers = true;
 
