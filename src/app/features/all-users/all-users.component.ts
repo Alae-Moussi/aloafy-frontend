@@ -141,9 +141,9 @@ export class AllUsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  getRoleBadgeClass(role: string): string {
-    return role === 'ADMIN' ? 'role-badge-admin' : 'role-badge-user';
-  }
+getRoleBadgeClass(role: string | undefined): string {
+  return role === 'ADMIN' ? 'role-badge-admin' : 'role-badge-user';
+}
 
   isCurrentUser(user: User): boolean {
     return user.id === this.currentUserId;

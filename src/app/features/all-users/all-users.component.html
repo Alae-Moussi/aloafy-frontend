@@ -1,1 +1,105 @@
-<p>all-users works!</p>
+<div class="all-users-container">
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="60" color="accent"></mat-spinner>
+    <p class="loading-text">Loading users...</p>
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button mat-raised-button color="accent" (click)="loadUsers()">
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage">
+    
+    <div class="header-section">
+      <h1 class="page-title">All Users</h1>
+      <p class="page-subtitle">Manage user roles and permissions</p>
+    </div>
+
+    <div class="content-section">
+      <div class="users-header">
+        <h2 class="section-title">
+          {{ totalElements }} {{ totalElements === 1 ? 'User' : 'Users' }}
+        </h2>
+      </div>
+
+      <div class="users-grid">
+        <div *ngFor="let user of users" class="user-card">
+          
+          <div class="user-card-header">
+            <div class="user-avatar">
+              <mat-icon class="avatar-icon">account_circle</mat-icon>
+            </div>
+            <div class="user-info">
+              <h3 class="user-name">{{ user.name }}</h3>
+              <p class="user-email">{{ user.email }}</p>
+            </div>
+          </div>
+
+          <div class="user-card-body">
+            
+            <div class="user-detail">
+              <mat-icon class="detail-icon">badge</mat-icon>
+              <span class="detail-label">User ID:</span>
+              <span class="detail-value">#{{ user.id }}</span>
+            </div>
+
+            <div class="user-detail" *ngIf="user.createdAt">
+              <mat-icon class="detail-icon">calendar_today</mat-icon>
+              <span class="detail-label">Joined:</span>
+              <span class="detail-value">{{ user.createdAt | date: 'MMM d, y' }}</span>
+            </div>
+
+            <div class="user-detail">
+              <mat-icon class="detail-icon">shield</mat-icon>
+              <span class="detail-label">Role:</span>
+              <div class="role-badge" [ngClass]="getRoleBadgeClass(user.role)">
+                <mat-icon class="role-icon">
+                  {{ user.role === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
+                </mat-icon>
+                <span>{{ user.role }}</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="user-card-footer">
+            
+            <button mat-button 
+                    class="role-btn role-btn-user" 
+                    [class.active]="user.role === 'USER'"
+                    [disabled]="isCurrentUser(user) && user.role === 'ADMIN'"
+                    (click)="updateUserRole(user, 'USER')"
+                    [title]="isCurrentUser(user) && user.role === 'ADMIN' ? 'You cannot demote yourself' : ''">
+              <mat-icon>person</mat-icon>
+              Set as User
+            </button>
+
+            <button mat-button 
+                    class="role-btn role-badge-admin" 
+                    [class.active]="user.role === 'ADMIN'"
+                    (click)="updateUserRole(user, 'ADMIN')">
+              <mat-icon>admin_panel_settings</mat-icon>
+              Set as Admin
+            </button>
+
+          </div>
+
+        </div>
+      </div> <div class="loading-more-container" *ngIf="loadingMore">
+        <mat-spinner diameter="40" color="accent"></mat-spinner>
+        <p class="loading-more-text">Loading more users...</p>
+      </div>
+
+      <div #scrollTrigger class="scroll-trigger"></div>
+
+      <div class="end-of-list" *ngIf="!hasMoreUsers && !loadingMore">
+        <p>You've reached the end of the users list</p>
+      </div>
+
+    </div> </div> </div>
