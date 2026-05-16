@@ -10,6 +10,7 @@ import { MusicPlayerService } from '../../core/services/music-player-service.ser
 import { NotificationService } from '../../core/services/notification-service.service';
 import { Song } from '../../core/models/song.model';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthImagePipe } from '../../core/pipes/auth-image.pipe'; 
 import { PlaylistSelectorDialogComponent } from '../../shared/playlist-selector-dialog/playlist-selector-dialog.component';
 
 @Component({
@@ -20,6 +21,7 @@ import { PlaylistSelectorDialogComponent } from '../../shared/playlist-selector-
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    AuthImagePipe
 
   ],
   templateUrl: './search.component.html',

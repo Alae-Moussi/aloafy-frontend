@@ -1,1 +1,105 @@
-<p>search works!</p>
+<div class="search-container">
+  
+  <div class="search-header">
+    <div class="search-bar-large">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input #searchInput 
+             type="text" 
+             class="search-input-large" 
+             placeholder="What do you want to listen to?"
+             [(ngModel)]="searchQuery" 
+             (keyup.enter)="onSearch()">
+      
+      <button *ngIf="searchQuery" 
+              mat-icon-button 
+              class="clear-search-btn" 
+              (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="60" color="accent"></mat-spinner>
+    <p class="loading-text">Searching...</p>
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button mat-raised-button color="accent" (click)="onSearch()">
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage">
+
+    <div *ngIf="!hasSearched" class="empty-state">
+      <mat-icon class="empty-icon">search</mat-icon>
+      <h2>Search for songs and artists</h2>
+      <p>Find your favorite music by searching for song title or artist names</p>
+    </div>
+
+    <div *ngIf="hasSearched && songs.length === 0" class="no-results-state">
+      <mat-icon class="no-results-icon">search_off</mat-icon>
+      <h2>No results found for "{{ searchQuery }}"</h2>
+      <p>Try searching with different keywords</p>
+    </div>
+
+    <div *ngIf="songs.length > 0" class="search-results">
+      <div class="results-header">
+        <h2 class="results-title">Search Results</h2>
+        <p class="results-count">
+          Found {{ songs.length }} song{{ songs.length === 1 ? '' : 's' }}
+        </p>
+      </div>
+
+      <div class="songs-list">
+        <div *ngFor="let song of songs; let i = index" 
+             class="song-item"
+             [ngClass]="{'now-playing' : isCurrentlyPlaying(song.id)}"
+             (click)="playSong(song)">
+          
+          <div class="song-index">{{ i + 1 }}</div>
+          
+          <div class="song-cover">
+            <img [src]="song.imageUrl | authImage" [alt]="song.title">
+            <button mat-icon-button class="play-button-small">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+          </div>
+
+          <div class="song-info">
+            <h4 class="song-title">{{ song.title }}</h4>
+            <p class="song-artist">{{ song.artist }}</p>
+          </div>
+
+          <div class="song-actions">
+            <button mat-icon-button 
+                    class="add-to-playlist-button" 
+                    (click)="openAddToPlaylistDialog($event, song)" 
+                    title="Add to playlist">
+              <mat-icon>playlist_add</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="loading-more-container" *ngIf="loadingMore">
+        <mat-spinner diameter="40" color="accent"></mat-spinner>
+        <p class="loading-more-text">Loading more songs...</p>
+      </div>
+
+      <div #scrollTrigger class="scroll-trigger"></div>
+
+      <div class="end-of-list" *ngIf="!hasMoreSongs && !loadingMore">
+        <p>You've reached the end of search results</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
