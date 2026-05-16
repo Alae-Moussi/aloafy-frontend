@@ -1,1 +1,105 @@
-<p>profile works!</p>
+<div class="profile-container">
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="60" color="accent"></mat-spinner>
+    <p class="loading-text">Loading your profile...</p>
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button mat-raised-button color="accent" (click)="loadUserProfile()">
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && user" class="profile-content">
+    
+    <div class="profile-header">
+      <div class="header-content">
+        
+        <div class="avatar-section">
+          <div class="avatar">
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+          </div>
+        </div>
+
+        <div class="header-info">
+          <h1 class="profile-name">{{ user.name }}</h1>
+          <p class="profile-email">{{ user.email }}</p>
+          
+          <div class="role-badge" [ngClass]="getRoleBadgeClass()">
+            <mat-icon class="role-icon">
+              {{ user.role === 'ADMIN' ? 'admin_panel_settings' : 'person' }}
+            </mat-icon>
+            <span>{{ user.role }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <button mat-raised-button color="accent" class="edit-profile-btn" (click)="openEditProfileDialog()">
+        <mat-icon>edit</mat-icon>
+        Edit Profile
+      </button>
+    </div>
+
+    <div class="profile-details">
+      <h2 class="section-title">Account Information</h2>
+
+      <div class="details-grid">
+        
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">person</mat-icon>
+            <span>Full Name</span>
+          </div>
+          <div class="detail-value">{{ user.name }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">email</mat-icon>
+            <span>Email Address</span>
+          </div>
+          <div class="detail-value">{{ user.email }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">shield</mat-icon>
+            <span>Account Role</span>
+          </div>
+          <div class="detail-value">{{ user.role }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">badge</mat-icon>
+            <span>User ID</span>
+          </div>
+          <div class="detail-value">#{{ user.id }}</div>
+        </div>
+
+        <div class="detail-item" *ngIf="user.createdAt">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">calendar_today</mat-icon>
+            <span>Member Since</span>
+          </div>
+          <div class="detail-value">{{ user.createdAt | date: 'MMMM d, y' }}</div>
+        </div>
+
+        <div class="detail-item" *ngIf="user.updatedAt">
+          <div class="detail-label">
+            <mat-icon class="detail-icon">update</mat-icon>
+            <span>Last Updated</span>
+          </div>
+          <div class="detail-value">{{ user.updatedAt | date: 'MMMM d, y - h:mm a' }}</div>
+        </div>
+
+      </div>
+    </div>
+    
+ </div>
+ </div>
