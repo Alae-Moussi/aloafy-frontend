@@ -59,7 +59,7 @@ export const routes: Routes = [
       {
         path: 'all-users',
         component: AllUsersComponent,
-        canActivate: [AdminGuard] // Seule l'admin peut voir tous les utilisateurs
+        //canActivate: [AdminGuard] // Seule l'admin peut voir tous les utilisateurs
 
       },
     ]
