@@ -25,6 +25,11 @@
         <mat-icon>home</mat-icon>
         <span>Accueil</span>
       </a>
+      <a routerLink="/search" routerLinkActive="active" class="nav-item">
+        <mat-icon>search</mat-icon>
+        <span>search</span>
+      </a>
+
 
       <a *ngIf="isAdmin" routerLink="/upload-song" routerLinkActive="active" class="nav-item admin-nav-item">
         <mat-icon>upload</mat-icon>
@@ -140,5 +145,5 @@
   <app-music-player></app-music-player>
 
   <app-expanded-player></app-expanded-player>
-  
+
 </div>
