@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 
 // Services
-import { AuthServiceService } from '../../../core/services/auth-service.service';
+import { AuthService } from '../../../core/services/auth-service.service';
 import { NotificationService } from '../../../core/services/notification-service.service';
 
 // Angular Material
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService

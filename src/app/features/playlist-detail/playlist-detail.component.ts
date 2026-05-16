@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { PlaylistService } from '../../core/services/playlist-service.service';
 import { MusicPlayerService } from '../../core/services/music-player-service.service';
-import { AuthServiceService } from '../../core/services/auth-service.service';
+import { AuthService } from '../../core/services/auth-service.service';
 import { NotificationService } from '../../core/services/notification-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialog } from '../../shared/confirmation-dialog/confirmation-dialog.component';
@@ -46,7 +46,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private playlistService: PlaylistService,
     private musicPlayerService: MusicPlayerService,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private notificationService: NotificationService
   ) {}

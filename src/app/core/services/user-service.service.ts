@@ -7,7 +7,7 @@ import { User, UpdateUserProfileRequest, PageResponse } from '../models/user.mod
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
+export class UserService  {
   private baseUrl = `${environment.apiUrl}/appUser`;
 
   constructor(private http: HttpClient) { }

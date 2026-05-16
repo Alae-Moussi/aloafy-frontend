@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Song } from '../../core/models/song.model';
 import { SongService } from '../../core/services/song-service.service';
 import { MusicPlayerService } from '../../core/services/music-player-service.service';
-import { AuthServiceService } from '../../core/services/auth-service.service';
+import { AuthService } from '../../core/services/auth-service.service';
 import { NotificationService } from '../../core/services/notification-service.service';
 import { ConfirmationDialog } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -51,7 +51,7 @@ export class MyUploadsComponent implements OnInit, OnDestroy {
   constructor(
     private songService: SongService,
     private musicPlayerService: MusicPlayerService,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private notificationService: NotificationService
   ) { }

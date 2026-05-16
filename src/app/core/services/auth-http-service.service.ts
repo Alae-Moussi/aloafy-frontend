@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AuthServiceService } from './auth-service.service';
+import { AuthService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthHttpService {
 
-  constructor(private authService: AuthServiceService) { }
+  constructor(private authService: AuthService) { }
 
   /**
    * Récupère un fichier (Blob) de manière sécurisée

@@ -4,7 +4,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { UserServiceService } from '../../core/services/user-service.service';
+import { UserService } from '../../core/services/user-service.service';
 import { NotificationService } from '../../core/services/notification-service.service';
 import { User } from '../../core/models/user.models';
 
@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private userService: UserServiceService,
+    private userService: UserService,
     private dialog: MatDialog,
     private notificationService: NotificationService
   ) {}

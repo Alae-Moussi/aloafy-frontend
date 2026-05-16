@@ -16,7 +16,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class AuthService  {
   private baseUrl = `${environment.apiUrl}/auth`;
   
   private currentUserSubject = new BehaviorSubject<User | null>(this.getUserFromStorage());

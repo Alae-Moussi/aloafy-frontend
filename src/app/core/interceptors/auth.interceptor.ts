@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthService } from '../services/auth-service.service';
 import { catchError, switchMap, throwError } from 'rxjs';
 
 // Liste des endpoints qui ne nécessitent pas de token
@@ -35,7 +35,7 @@ const isTokenExpired = (token: string): boolean => {
 };
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthServiceService);
+  const authService = inject(AuthService);
 
   // 1. Si c'est un endpoint public, on laisse passer sans rien toucher
   if (isPublicEndPoint(req.url)) {

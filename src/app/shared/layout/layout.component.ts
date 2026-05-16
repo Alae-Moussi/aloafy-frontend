@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { AuthServiceService } from '../../core/services/auth-service.service';
+import { AuthService } from '../../core/services/auth-service.service';
 import { PlaylistService } from '../../core/services/playlist-service.service';
 import { MusicPlayerService } from '../../core/services/music-player-service.service'; 
 import { Playlist } from '../../core/models/playlist.model';
@@ -78,7 +78,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     public router: Router,
     public location: Location,
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private playlistService: PlaylistService,
     private musicPlayerService: MusicPlayerService
   ) {}
