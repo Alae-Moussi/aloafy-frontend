@@ -8,6 +8,7 @@ import { UploadSongComponent } from './features/upload-song/upload-song.componen
 import { MyUploadsComponent } from './features/my-uploads/my-uploads.component';
 import { CreatePlaylist } from './features/create-playlist/create-playlist.component';
 import { PlaylistDetailComponent } from './features/playlist-detail/playlist-detail.component';
+import { SearchComponent } from './features/search/search.component';
 
 export const routes: Routes = [
   // 1. Redirection par défaut vers le login
@@ -41,6 +42,11 @@ export const routes: Routes = [
        { 
         path: 'playlist/:id', 
         component: PlaylistDetailComponent, 
+        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+      },
+      { 
+        path: 'search', 
+        component: SearchComponent, 
         //canActivate: [AdminGuard] // Seul l'admin peut uploader !
       }
     ]
