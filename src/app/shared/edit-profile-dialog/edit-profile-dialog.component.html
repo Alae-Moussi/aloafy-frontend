@@ -1,1 +1,143 @@
-<p>edit-profile-dialog works!</p>
+<div class="dialog-container">
+    <h2 mat-dialog-title class="dialog-title">Edit Profile</h2>
+
+    <mat-dialog-content class="dialog-content">
+        <form [formGroup]="editForm" class="edit-form">
+
+            <div class="form-section">
+                <h3 class="section-title">Personal Information</h3>
+
+                <div class="input-group">
+                    <label for="name" class="input-label">Full Name *</label>
+                    <div class="input-with-icon">
+                        <mat-icon class="field-icon">person</mat-icon>
+                        <input id="name" type="text" class="input-field has-icon"
+                            [class.error]="editForm.get('name')?.invalid && editForm.get('name')?.touched"
+                            formControlName="name" placeholder="Enter your name" maxlength="100">
+                    </div>
+
+                    <span class="error-message"
+                        *ngIf="editForm.get('name')?.touched && editForm.get('name')?.hasError('required')">
+                        Name is required
+                    </span>
+                    <span class="error-message"
+                        *ngIf="editForm.get('name')?.touched && editForm.get('name')?.hasError('minlength')">
+                        Name must be at least 2 characters
+                    </span>
+                </div>
+
+                <div class="input-group">
+                    <label for="email" class="input-label">Email Address</label>
+                    <div class="input-with-icon">
+                        <mat-icon class="field-icon">email</mat-icon>
+                        <input id="email" type="text" class="input-field has-icon disabled" [value]="data.user.email"
+                            readonly>
+                    </div>
+                    <span class="hint-message">Email cannot be changed</span>
+                </div>
+            </div>
+
+            <div class="password-toggle-section">
+                <button type="button" mat-button class="toggle-password-btn" (click)="togglePasswordSection()">
+                    <mat-icon>{{ showPasswordSection ? 'expand_less' : 'expand_more' }}</mat-icon>
+                    {{ showPasswordSection ? 'Hide' : 'Show' }} Change Password
+                </button>
+            </div>
+
+            <div class="form-section password-section" *ngIf="showPasswordSection">
+                <h3 class="section-title">Change Password</h3>
+
+                <div class="input-group">
+                    <label for="oldPassword" class="input-label">Current Password *</label>
+                    <div class="password-input-wrapper">
+                        <mat-icon class="field-icon">lock</mat-icon>
+                        <input id="oldPassword" [type]="hideOldPassword ? 'password' : 'text'"
+                            class="input-field has-icon"
+                            [class.error]="editForm.get('oldPassword')?.invalid && editForm.get('oldPassword')?.touched"
+                            formControlName="oldPassword" placeholder="Enter current password">
+
+                        <button type="button" mat-icon-button class="visibility-toggle"
+                            (click)="hideOldPassword = !hideOldPassword">
+                            <mat-icon>{{ hideOldPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </div>
+                    <span class="error-message"
+                        *ngIf="editForm.get('oldPassword')?.touched && editForm.get('oldPassword')?.hasError('required')">
+                        Current password is required
+                    </span>
+                </div>
+
+                <div class="input-group">
+                    <label for="newPassword" class="input-label">New Password *</label>
+                    <div class="password-input-wrapper">
+                        <mat-icon class="field-icon">lock_open</mat-icon>
+                        <input id="newPassword" [type]="hideNewPassword ? 'password' : 'text'"
+                            class="input-field has-icon"
+                            [class.error]="editForm.get('newPassword')?.invalid && editForm.get('newPassword')?.touched"
+                            formControlName="newPassword" placeholder="Enter new password">
+
+                        <button type="button" mat-icon-button class="visibility-toggle"
+                            (click)="hideNewPassword = !hideNewPassword">
+                            <mat-icon>{{ hideNewPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </div>
+
+                    <span class="error-message"
+                        *ngIf="editForm.get('newPassword')?.touched && editForm.get('newPassword')?.hasError('required')">
+                        New Password is required
+                    </span>
+                    <span class="error-message"
+                        *ngIf="editForm.get('newPassword')?.touched && editForm.get('newPassword')?.hasError('minlength')">
+                        Password must be at least 6 characters
+                    </span>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword" class="input-label">Confirm New Password *</label>
+                    <div class="password-input-wrapper">
+                        <mat-icon class="field-icon">lock_open</mat-icon>
+                        <input id="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'"
+                            class="input-field has-icon"
+                            [class.error]="editForm.get('confirmPassword')?.invalid && editForm.get('confirmPassword')?.touched"
+                            formControlName="confirmPassword" placeholder="Confirm new password">
+
+                        <button type="button" mat-icon-button class="visibility-toggle"
+                            (click)="hideConfirmPassword = !hideConfirmPassword">
+                            <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </div>
+                    <span class="error-message"
+                        *ngIf="editForm.get('confirmPassword')?.touched && editForm.get('confirmPassword')?.hasError('required')">
+                        Please confirm your new password
+                    </span>
+                </div>
+
+                <div class="password-mismatch-error"
+                    *ngIf="editForm.hasError('passwordMismatch') && editForm.get('confirmPassword')?.value && editForm.get('newPassword')?.value">
+                    <mat-icon>error</mat-icon>
+                    <span>Password do not match</span>
+                </div>
+
+                <div class="password-requirements">
+                    <mat-icon class="info-icon">info</mat-icon>
+                    <div class="requirements-text">
+                        <p class="requirements-title">Password Requirements:</p>
+                        <ul>
+                            <li>At least 6 characters long</li>
+                            <li>Both passwords must match</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="dialog-actions">
+      <button mat-stroked-button (click)="onCancel()" class="btn-cancel">Cancel</button>
+      <button mat-raised-button (click)="onSave()" class="btn-save" [disabled]="editForm.invalid">
+        <mat-icon>save</mat-icon>
+        <span>Save Changes</span>
+      </button>
+    </mat-dialog-actions>
+</div>
