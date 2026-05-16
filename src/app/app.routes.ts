@@ -10,11 +10,12 @@ import { CreatePlaylist } from './features/create-playlist/create-playlist.compo
 import { PlaylistDetailComponent } from './features/playlist-detail/playlist-detail.component';
 import { SearchComponent } from './features/search/search.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { AllUsersComponent } from './features/all-users/all-users.component';
 
 export const routes: Routes = [
   // 1. Redirection par défaut vers le login
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  
+
   // 2. Route publique pour la connexion
   { path: 'login', component: LoginComponent },
 
@@ -25,35 +26,41 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'home', component: HomeComponent },
-      { 
-        path: 'upload-song', 
-        component: UploadSongComponent, 
+      {
+        path: 'upload-song',
+        component: UploadSongComponent,
         //canActivate: [AdminGuard] // Seul l'admin peut uploader !
       },
-      { 
-        path: 'my-uploads', 
-        component: MyUploadsComponent, 
+      {
+        path: 'my-uploads',
+        component: MyUploadsComponent,
         //canActivate: [AdminGuard] // Seul l'admin peut uploader !
       },
-      { 
-        path: 'create-playlist', 
-        component: CreatePlaylist, 
+      {
+        path: 'create-playlist',
+        component: CreatePlaylist,
 
       },
-       { 
-        path: 'playlist/:id', 
-        component: PlaylistDetailComponent, 
-        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+      {
+        path: 'playlist/:id',
+        component: PlaylistDetailComponent,
+
       },
-      { 
-        path: 'search', 
-        component: SearchComponent, 
-        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+      {
+        path: 'search',
+        component: SearchComponent,
+
       },
-      { 
-        path: 'profile', 
-        component: ProfileComponent, 
-        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+      {
+        path: 'profile',
+        component: ProfileComponent,
+
+      },
+      {
+        path: 'all-users',
+        component: AllUsersComponent,
+        canActivate: [AdminGuard] // Seule l'admin peut voir tous les utilisateurs
+
       },
     ]
   },
