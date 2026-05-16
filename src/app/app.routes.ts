@@ -9,6 +9,7 @@ import { MyUploadsComponent } from './features/my-uploads/my-uploads.component';
 import { CreatePlaylist } from './features/create-playlist/create-playlist.component';
 import { PlaylistDetailComponent } from './features/playlist-detail/playlist-detail.component';
 import { SearchComponent } from './features/search/search.component';
+import { ProfileComponent } from './features/profile/profile.component';
 
 export const routes: Routes = [
   // 1. Redirection par défaut vers le login
@@ -17,7 +18,7 @@ export const routes: Routes = [
   // 2. Route publique pour la connexion
   { path: 'login', component: LoginComponent },
 
-  // 3. Routes protégées utilisant le Layout (Sidebar + Navbar)
+
   {
     path: '',
     component: LayoutComponent,
@@ -48,7 +49,12 @@ export const routes: Routes = [
         path: 'search', 
         component: SearchComponent, 
         //canActivate: [AdminGuard] // Seul l'admin peut uploader !
-      }
+      },
+      { 
+        path: 'profile', 
+        component: ProfileComponent, 
+        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+      },
     ]
   },
 
