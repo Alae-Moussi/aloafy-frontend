@@ -6,16 +6,16 @@ import { NotificationService } from '../../core/services/notification-service.se
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-upload-song',
   standalone: true,
   imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    MatIconModule, 
-    MatButtonModule, 
-    MatProgressSpinnerModule 
+    CommonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './upload-song.component.html',
   styleUrl: './upload-song.component.scss'
@@ -38,7 +38,7 @@ export class UploadSongComponent implements OnInit, OnDestroy {
     private songService: SongService,
     private router: Router,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.songForm = this.formBuilder.group({
@@ -160,6 +160,10 @@ export class UploadSongComponent implements OnInit, OnDestroy {
     this.songFile = null;
     this.audioPreviewUrl = null;
     this.songFileError = '';
+    const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
   clearImageFile(): void {
@@ -169,5 +173,9 @@ export class UploadSongComponent implements OnInit, OnDestroy {
     this.imageFile = null;
     this.imagePreviewUrl = null;
     this.imageFileError = '';
+    const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 }

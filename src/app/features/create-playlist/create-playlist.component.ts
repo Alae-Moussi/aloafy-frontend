@@ -12,7 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'app-create-playlist',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,      // Indispensable pour [formGroup]
     MatIconModule,            // Indispensable pour <mat-icon>
     MatButtonModule,          // Indispensable pour mat-raised-button
@@ -85,6 +85,10 @@ export class CreatePlaylist implements OnDestroy {
     }
     this.imagePreviewUrl = null;
     this.imageFileError = '';
+    const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
   onSubmit() {
@@ -93,9 +97,9 @@ export class CreatePlaylist implements OnDestroy {
       const { name, description, isPublic } = this.playlistForm.value;
 
       this.playlistService.createPlaylist(
-        name.trim(), 
-        description.trim(), 
-        isPublic, 
+        name.trim(),
+        description.trim(),
+        isPublic,
         this.imageFile!
       ).subscribe({
         next: (playlist) => {
