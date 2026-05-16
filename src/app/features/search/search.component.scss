@@ -1,0 +1,521 @@
+/* Search Container */
+.search-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+/* Search Header */
+.search-header {
+  margin-bottom: 48px;
+  position: sticky;
+  top: 0;
+  padding: 24px 0;
+  z-index: 10;
+}
+
+.search-bar-large {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 0 24px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar-large:focus-within {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--app-primary);
+  box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
+  transform: translateY(-2px);
+}
+
+.search-icon {
+  color: var(--app-gray);
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.search-bar-large:focus-within .search-icon {
+  color: var(--app-primary);
+}
+
+.search-input-large {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--app-white);
+  font-size: 18px;
+  padding: 18px 0;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.search-input-large::placeholder {
+  color: var(--app-gray);
+  font-weight: 400;
+}
+
+.clear-search-btn {
+  color: var(--app-gray) !important;
+  width: 40px !important;
+  height: 40px !important;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  color: var(--app-white) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.1);
+}
+
+.clear-search-btn mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 24px;
+}
+
+.loading-text {
+  color: var(--app-white);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+::ng-deep .loading-container .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--app-primary) !important;
+}
+
+/* Error State */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+}
+
+.error-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #e74c3c;
+}
+
+.error-message {
+  color: var(--app-white);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.error-container button {
+  margin-top: 16px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  gap: 16px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 120px;
+  width: 120px;
+  height: 120px;
+  color: var(--app-gray);
+  opacity: 0.4;
+  margin-bottom: 16px;
+}
+
+.empty-state h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--app-white);
+  margin: 0;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: var(--app-gray);
+  margin: 0;
+  max-width: 500px;
+}
+
+/* No Results State */
+.no-results-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+  text-align: center;
+}
+
+.no-results-icon {
+  font-size: 100px;
+  width: 100px;
+  height: 100px;
+  color: var(--app-gray);
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+.no-results-state h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--app-white);
+  margin: 0;
+}
+
+.no-results-state p {
+  font-size: 16px;
+  color: var(--app-gray);
+  margin: 0;
+}
+
+/* Search Results */
+.search-results {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.results-header {
+  margin-bottom: 32px;
+}
+
+.results-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--app-white);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.results-count {
+  font-size: 14px;
+  color: var(--app-gray);
+  margin: 0;
+}
+
+/* Songs List */
+.songs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.song-item {
+  display: grid;
+  grid-template-columns: 40px 56px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.song-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Now Playing Animation */
+.song-item.now-playing::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 6px;
+  background: linear-gradient(45deg,
+    #ff0000, #ff7f00, #ffff00, #00ff00,
+    #0000ff, #4b0082, #9400d3, #ff0000);
+  background-size: 400% 400%;
+  animation: rainbow-rotate 3s linear infinite;
+  z-index: -1;
+}
+
+.song-item.now-playing {
+  background-color: rgba(30, 215, 96, 0.1);
+  border: 2px solid transparent;
+}
+
+@keyframes rainbow-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.song-item:hover .play-button-small {
+  opacity: 1;
+}
+
+.song-index {
+  font-size: 16px;
+  color: var(--app-gray);
+  text-align: center;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.song-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.song-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-button-small {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  color: var(--app-white) !important;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  z-index: 1;
+}
+
+.play-button-small mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-button-small:hover {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.song-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.song-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--app-white);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-artist {
+  font-size: 14px;
+  color: var(--app-gray);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.add-to-playlist-button {
+  color: var(--app-gray) !important;
+  transition: all 0.2s ease;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+.add-to-playlist-button mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-to-playlist-button:hover {
+  color: var(--app-primary) !important;
+  background-color: rgba(29, 185, 84, 0.1) !important;
+  transform: scale(1.1);
+}
+
+.delete-button-song {
+  color: #e74c3c !important;
+  transition: all 0.2s ease;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+.delete-button-song mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button-song:hover {
+  background-color: rgba(231, 76, 60, 0.2) !important;
+  color: #ff6b6b !important;
+  transform: scale(1.1);
+}
+
+/* Infinite Scroll */
+.loading-more-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  gap: 16px;
+}
+
+.loading-more-text {
+  color: var(--app-gray);
+  font-size: 14px;
+  margin: 0;
+}
+
+::ng-deep .loading-more-container .mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: var(--app-primary) !important;
+}
+
+.scroll-trigger {
+  height: 1px;
+  visibility: hidden;
+}
+
+.end-of-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  margin-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.end-of-list p {
+  color: var(--app-gray);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-header {
+    padding: 16px 0;
+  }
+
+  .search-bar-large {
+    padding: 0 16px;
+  }
+
+  .search-input-large {
+    font-size: 16px;
+    padding: 14px 0;
+  }
+
+  .search-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .empty-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .empty-state h2 {
+    font-size: 24px;
+  }
+
+  .empty-state p {
+    font-size: 16px;
+  }
+
+  .results-title {
+    font-size: 24px;
+  }
+
+  .song-item {
+    grid-template-columns: 32px 48px 1fr auto;
+    gap: 12px;
+    padding: 8px 12px;
+  }
+
+  .song-cover {
+    width: 48px;
+    height: 48px;
+  }
+}
