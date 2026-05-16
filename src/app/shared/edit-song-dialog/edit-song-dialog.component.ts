@@ -100,6 +100,10 @@ export class EditSongDialog implements OnDestroy {
     this.songFile = null;
     this.audioPreviewUrl = null;
     this.songFileError = '';
+    const fileInput = document.getElementById('songFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
   clearImageFile(): void {
@@ -107,6 +111,10 @@ export class EditSongDialog implements OnDestroy {
     this.imageFile = null;
     this.imagePreviewUrl = null;
     this.imageFileError = '';
+    const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
   }
 
   onCancel(): void {
@@ -120,7 +128,7 @@ export class EditSongDialog implements OnDestroy {
     formData.append('artist', artist.trim());
     if (this.songFile) formData.append('songFile', this.songFile);
     if (this.imageFile) formData.append('imageFile', this.imageFile);
-    
+
     this.dialogRef.close(formData);
   }
 

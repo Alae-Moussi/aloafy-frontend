@@ -160,7 +160,7 @@ export class UploadSongComponent implements OnInit, OnDestroy {
     this.songFile = null;
     this.audioPreviewUrl = null;
     this.songFileError = '';
-    const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+    const fileInput = document.getElementById('songFile') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
     }
