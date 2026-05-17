@@ -112,8 +112,8 @@ export class AuthService  {
   }
 
   isLoggedIn(): boolean {
-    //return !!this.getAccessToken();
-    return true ;
+    return !!this.getAccessToken();
+    //return true ;
   }
 
   forgotPassword(email: string): Observable<MessageResponse> {
