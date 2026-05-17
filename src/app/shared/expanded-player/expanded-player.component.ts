@@ -146,11 +146,16 @@ export class ExpandedPlayer extends MusicPlayer implements OnInit, OnDestroy {
     this.aiSongData = null;
     this.currentLoadingStep = 0;
 
+   
+    const rawId = this.currentSong.id.toString().split(':')[0];
+    const cleanSongId = Number(rawId);
+
     setTimeout(() => this.currentLoadingStep = 1, 2000);
     setTimeout(() => this.currentLoadingStep = 2, 4000);
 
     setTimeout(() => {
-      this.songService.getSongAiInsights(this.currentSong!.id).subscribe({
+      // On envoie l'ID nettoyé (cleanSongId) au lieu de this.currentSong.id
+      this.songService.getSongAiInsights(cleanSongId).subscribe({
         next: (data) => {
           this.aiSongData = data;
           this.loadingAiData = false;
