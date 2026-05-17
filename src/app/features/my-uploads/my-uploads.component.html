@@ -37,7 +37,7 @@
       </div>
 
       <div class="songs-list">
-        <div class="song-item" *ngFor="let song of songs; let i = index">
+        <div class="song-item" *ngFor="let song of songs; let i = index" (click)="playSong(song)">
           <span class="song-index">{{ i + 1 }}</span>
           
           <div class="song-cover">
@@ -57,13 +57,18 @@
           </div>
 
           <div class="song-actions">
-            <button mat-icon-button class="add-to-playlist-button" title="Add to playlist">
+            <button mat-icon-button class="add-to-playlist-button" title="Add to playlist"
+                    (click)="openAddToPlaylistDialog($event, song)">
               <mat-icon>playlist_add</mat-icon>
             </button>
-            <button mat-icon-button class="edit-button-song"  title="Edit song">
+            
+            <button mat-icon-button class="edit-button-song" title="Edit song"
+                    (click)="editSong($event, song)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button class="delete-button-song" title="Delete song">
+            
+            <button mat-icon-button class="delete-button-song" title="Delete song"
+                    (click)="deleteSong($event, song)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
