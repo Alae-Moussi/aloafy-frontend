@@ -261,7 +261,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private startTypingEffect() {
     if (this.typingInterval) clearTimeout(this.typingInterval);
-    const text = 'Musify';
+    const text = 'Aloafy';
     const typingElement = document.querySelector('.typing-text');
     if (!typingElement) return;
 
