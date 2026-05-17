@@ -18,7 +18,7 @@ import {
 })
 export class AuthService {
 
-  private baseUrl = `${environment.apiUrl}/api/auth`;
+  private baseUrl = `${environment.apiUrl}/auth`;
 
   private currentUserSubject = new BehaviorSubject<User | null>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
