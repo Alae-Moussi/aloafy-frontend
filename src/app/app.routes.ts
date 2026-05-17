@@ -29,12 +29,12 @@ export const routes: Routes = [
       {
         path: 'upload-song',
         component: UploadSongComponent,
-        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+        canActivate: [AdminGuard] // Seul l'admin peut uploader !
       },
       {
         path: 'my-uploads',
         component: MyUploadsComponent,
-        //canActivate: [AdminGuard] // Seul l'admin peut uploader !
+        canActivate: [AdminGuard] // Seul l'admin peut uploader !
       },
       {
         path: 'create-playlist',
@@ -59,7 +59,7 @@ export const routes: Routes = [
       {
         path: 'all-users',
         component: AllUsersComponent,
-        //canActivate: [AdminGuard] // Seule l'admin peut voir tous les utilisateurs
+        canActivate: [AdminGuard] // Seule l'admin peut voir tous les utilisateurs
 
       },
     ]
