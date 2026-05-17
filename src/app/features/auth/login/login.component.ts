@@ -35,7 +35,7 @@ type AuthView = 'login' | 'forgotPassword' | 'signUp';
     MatSnackBarModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss'] // Correction mineure : styleUrls au lieu de styleUrl pour la compatibilité
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -91,10 +91,10 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]]
     });
 
+    // CORRIGÉ : Suppression du champ 'password' car absent de ton HTML d'inscription
     this.signUpForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
@@ -156,8 +156,9 @@ export class LoginComponent implements OnInit {
     this.authService.signUp({ email, name }).subscribe({
       next: (response) => {
         this.signUpLoading = false;
-        this.signUpSuccess = response.message;
-        this.notificationService.success(response.message);
+        this.signUpSuccess = response.message || 'Account created successfully!';
+        this.notificationService.success(this.signUpSuccess);
+        this.signUpForm.reset();
         setTimeout(() => this.showLoginView(), 3000);
       },
       error: (error) => {
@@ -178,6 +179,7 @@ export class LoginComponent implements OnInit {
         this.forgotPasswordLoading = false;
         this.forgotPasswordSuccess = res.message;
         this.notificationService.success(res.message);
+        this.forgotPasswordForm.reset();
         setTimeout(() => this.showLoginView(), 3000);
       },
       error: (err) => {

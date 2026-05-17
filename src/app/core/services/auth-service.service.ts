@@ -5,20 +5,21 @@ import { BehaviorSubject, Observable, throwError, of, firstValueFrom } from 'rxj
 import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { 
-  AuthResponse, 
-  LoginRequest, 
-  MessageResponse, 
-  SignUpRequest, 
-  User 
+import {
+  AuthResponse,
+  LoginRequest,
+  MessageResponse,
+  SignUpRequest,
+  User
 } from '../models/user.models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService  {
-  private baseUrl = `${environment.apiUrl}/auth`;
-  
+export class AuthService {
+
+  private baseUrl = `${environment.apiUrl}/api/auth`;
+
   private currentUserSubject = new BehaviorSubject<User | null>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -26,7 +27,7 @@ export class AuthService  {
   private refreshResult$ = new BehaviorSubject<{ success: boolean; token?: string } | null>(null);
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
@@ -102,7 +103,7 @@ export class AuthService  {
     }
     return null;
   }
-//hay
+  //hay
   getAccessToken(): string | null {
     return isPlatformBrowser(this.platformId) ? localStorage.getItem('accessToken') : null;
   }
@@ -134,7 +135,7 @@ export class AuthService  {
     if (isPlatformBrowser(this.platformId) && response.accessToken && response.refreshToken) {
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
-      
+
       const user: User = {
         id: response.id,
         name: response.name,
