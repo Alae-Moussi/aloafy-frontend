@@ -35,7 +35,7 @@ type AuthView = 'login' | 'forgotPassword' | 'signUp';
     MatSnackBarModule
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'] // Correction mineure : styleUrls au lieu de styleUrl pour la compatibilité
+  styleUrls: ['./login.component.scss'] 
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
