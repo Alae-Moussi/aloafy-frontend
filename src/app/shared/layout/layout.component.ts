@@ -15,6 +15,9 @@ import { RouterModule } from '@angular/router';
 import { MusicPlayer } from "../music-player/music-player.component";
 import { ExpandedPlayer } from '../expanded-player/expanded-player.component';
 
+// LE BON CHEMIN D'IMPORTATION CORRIGÉ :
+import { ChatbotComponent } from '../chatbot/chatbot.component';
+
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -27,7 +30,8 @@ import { ExpandedPlayer } from '../expanded-player/expanded-player.component';
     MatProgressSpinnerModule,
     FormsModule,
     MusicPlayer,
-    ExpandedPlayer
+    ExpandedPlayer,
+    ChatbotComponent // Ajouté ici pour corriger l'erreur de "layout.component.html"
 ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
@@ -148,7 +152,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.loadingMorePlaylists = false;
-          this.currentPage--; // Annule l'incrémentation en cas d'échec
+          this.currentPage--; 
         }
       });
   }

@@ -1,0 +1,30 @@
+<!-- Bouton flottant -->
+<button class="chat-fab" (click)="toggle()">
+  <mat-icon>{{ isOpen ? 'close' : 'chat' }}</mat-icon>
+</button>
+
+<!-- Fenêtre de chat -->
+<div class="chat-window" *ngIf="isOpen">
+  <div class="chat-header">
+    <span>🎵 Aloafy</span>
+  </div>
+  
+  <div class="chat-messages">
+    <div *ngFor="let msg of messages" 
+         [ngClass]="msg.isUser ? 'msg-user' : 'msg-bot'">
+      {{ msg.text }}
+    </div>
+    <div *ngIf="loading" class="msg-bot">...</div>
+  </div>
+
+  <div class="chat-input">
+    <input 
+      [(ngModel)]="message" 
+      (keyup)="onEnter($event)"
+      placeholder="Dis-moi comment tu te sens..."
+      class="input-field">
+    <button mat-icon-button (click)="send()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>
