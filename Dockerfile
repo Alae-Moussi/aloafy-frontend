@@ -4,10 +4,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build -- --configuration=production
+# We disable prerendering and ssr here so it builds directly into static files
+RUN npm run build -- --configuration=production --prerender false --ssr false
 
 # Stage 2: Serve with Nginx
 FROM nginx:stable-alpine
-COPY --from=build /app/dist/aloafy-frontend/browser/ /usr/share/nginx/html
+# Points directly to the compiled project output folder seen in your angular.json
+COPY --from=build /app/dist/spotify-clone/browser/ /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
